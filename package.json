@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.12",
+    "@qwikdev/astro": "^0.8.2",
     "astro": "^5.16.4"
   }
 }

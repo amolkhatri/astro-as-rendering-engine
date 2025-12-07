@@ -1,0 +1,77 @@
+---
+title: "src/pages/**/*"
+order: 6
+icon: "/"
+---
+
+# ROUTER.FILE_SYSTEM
+## Convention over Configuration
+
+Astro uses a **file-based routing system** where the file structure in your 
+`src/pages` directory determines your routes. Simple, intuitive, and powerful.
+
+## Route Mapping
+
+```
+src/pages/
+│
+├── index.astro           →  /
+├── about.astro           →  /about
+├── contact.astro         →  /contact
+│
+├── blog/
+│   ├── index.astro       →  /blog
+│   ├── [slug].astro      →  /blog/:slug (dynamic)
+│   └── [...path].astro   →  /blog/* (catch-all)
+│
+├── docs/
+│   └── [...slug].astro   →  /docs/* (catch-all)
+│
+└── api/
+    ├── posts.ts          →  /api/posts (API endpoint)
+    └── users/
+        └── [id].ts       →  /api/users/:id
+```
+
+## Dynamic Routes
+
+```astro
+---
+// src/pages/blog/[slug].astro
+export async function getStaticPaths() {
+  const posts = await fetchPosts();
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<article>
+  <h1>{post.title}</h1>
+  <div set:html={post.content} />
+</article>
+```
+
+## API Routes
+
+```typescript
+// src/pages/api/posts.ts
+import type { APIRoute } from 'astro';
+
+export const GET: APIRoute = async ({ request }) => {
+  const posts = await db.posts.findMany();
+  return new Response(JSON.stringify(posts), {
+    headers: { 'Content-Type': 'application/json' }
+  });
+};
+
+export const POST: APIRoute = async ({ request }) => {
+  const data = await request.json();
+  const post = await db.posts.create({ data });
+  return new Response(JSON.stringify(post), { status: 201 });
+};
+```
+

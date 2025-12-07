@@ -1,0 +1,81 @@
+---
+title: "traditional --server"
+order: 2
+icon: "🖥️"
+---
+
+import { TraditionalServerAnimation } from '../../components/q/TraditionalServerAnimation';
+
+# THE TRADITIONAL WAY
+## How Servers Build Pages Today
+
+Most web frameworks assemble pages on the server without prioritizing performance.
+The result? **Heavy JavaScript bundles** shipped to every user's browser.
+
+<TraditionalServerAnimation client:visible />
+
+## What We Need From Web Pages
+
+| Requirement | What It Means |
+|-------------|---------------|
+| **1. Content Driven** | Static + Dynamic + Personalized content |
+| **2. Interactive** | Rich UI with buttons, forms, animations |
+| **3. SEO Friendly** | Crawlable, indexed, fast FCP |
+| **4. Performant** | Fast load times, smooth interactions |
+
+## The Traditional Approach
+
+```
+SERVER SIDE:
+├── ✅ Assembles HTML from templates
+├── ✅ Fetches data from APIs/Database  
+├── ✅ Handles personalization
+├── ✅ Server-side rendering works...
+│
+└── BUT THEN...
+    └── 📦 Bundles ENTIRE framework + app code
+    └── 📤 Ships 2MB+ JavaScript to browser
+```
+
+## The Problem Cascade
+
+```
+1. USER REQUESTS PAGE
+   └── Server does its job well ✓
+
+2. SERVER RESPONDS  
+   └── HTML arrives quickly ✓
+   └── But also ships massive JS bundle ✗
+
+3. BROWSER MUST:
+   └── Download 2MB+ of JavaScript 
+   └── Parse all that code
+   └── Execute framework initialization
+   └── "Hydrate" every component
+   └── FINALLY... page is interactive
+
+4. PERFORMANCE FIX? 
+   └── Add CDN caching
+   └── Add service workers
+   └── Code splitting (still ships too much)
+   └── Lazy loading (complexity++)
+   └── 💸 More infrastructure, more cost
+```
+
+## The Core Issue
+
+> 🎯 **Performance becomes an afterthought.**  
+> We build features first, then scramble to optimize later.  
+> Caching and CDNs are band-aids, not solutions.
+
+## What If...
+
+What if we could have **all the content features** we need:
+- ✅ Static content
+- ✅ Dynamic data
+- ✅ Personalization  
+- ✅ Interactivity
+
+...but **ship almost zero JavaScript** to the browser?
+
+*That's where Astro comes in. →*

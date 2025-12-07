@@ -1,0 +1,60 @@
+---
+title: "init --framework"
+order: 1
+icon: ">_"
+---
+
+import { Counter } from '../../components/q/InteractiveDemo';
+
+# ASTRO.INIT 
+## Characteristics of the platform
+
+Client Requirements:
+1. Content Driven with Static + Dynamic Content + Personalized Content
+2. Interactive Content
+3. SEO Friendly
+4. Performant
+
+Developer Requirements:
+1. Framework Agnostic
+2. Cost of development and maintenance
+3. 
+
+## Characteristics of platform
+
+1. Performance First:
+    1. Less work for the browser
+    2. Sever responds faster
+    
+    Use Island architecture. 
+3. Server Side Rendering:
+
+4. Cost of development and maintenance
+    1. Framework Agnostic
+    2. Less code to write
+    3. 
+
+Astro1 is an **all-in-one web framework** for building fast, content-focused websites. 
+It ships **zero JavaScript by default** and uses a unique "Islands Architecture" 
+to hydrate interactive components only when needed.
+
+## Core Features
+
+```js
+const astro = {
+  ship_js: false,           // Zero JavaScript by default
+  hydration: "selective",   // Component Islands architecture  
+  frameworks: ["react", "vue", "svelte", "qwik", "vanilla"],
+  deploy: ["edge", "ssg", "ssr"],
+  optimize: { images: true, fonts: true, assets: true }
+};
+```
+
+## Try It - Interactive Qwik Component
+
+This counter below is a **Qwik component** running inside Astro:
+
+<Counter client:visible />
+
+> 💡 **Note**: This component only loads JavaScript when it becomes visible in the viewport!
+

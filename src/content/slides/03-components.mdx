@@ -1,0 +1,55 @@
+---
+title: ".astro components"
+order: 4
+icon: "{ }"
+---
+
+# COMPONENTS.ASTRO
+## HTML-First Architecture
+
+Astro components (`.astro` files) are **HTML-first components** with a powerful 
+templating syntax. They run at **build time** and produce **zero JavaScript** output by default.
+
+## Anatomy of an Astro Component
+
+```astro
+---
+// FRONTMATTER - Runs on the server at build time
+import MyQwikComponent from './MyQwikComponent.tsx';
+
+const { title, date } = Astro.props;
+const posts = await fetch('https://api.example.com/posts').then(r => r.json());
+---
+
+<!-- TEMPLATE - Pure HTML with JSX-like expressions -->
+<article class="post">
+  <h1>{title}</h1>
+  <time datetime={date}>{new Date(date).toLocaleDateString()}</time>
+  
+  <ul>
+    {posts.map(post => (
+      <li>{post.title}</li>
+    ))}
+  </ul>
+  
+  <!-- Interactive island -->
+  <MyQwikComponent client:visible />
+</article>
+
+<style>
+  /* SCOPED CSS - Only affects this component */
+  .post {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>
+```
+
+## Key Concepts
+
+- **Frontmatter** (`---`): Server-side JavaScript, runs at build
+- **Template**: HTML with `{expressions}` for dynamic content
+- **Scoped Styles**: CSS that won't leak to other components
+- **Props**: Type-safe component inputs via `Astro.props`
+- **Slots**: Content projection like Web Components
+

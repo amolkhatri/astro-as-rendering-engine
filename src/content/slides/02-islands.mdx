@@ -1,0 +1,47 @@
+---
+title: "architecture.islands"
+order: 3
+icon: "◊"
+---
+
+import { ToggleTheme } from '../../components/q/InteractiveDemo';
+
+# ISLANDS.ARCH 
+## Partial Hydration Pattern
+
+Islands Architecture is a web architecture pattern that Astro pioneered. 
+Instead of hydrating the entire page with JavaScript, only the interactive 
+"islands" get hydrated while the rest remains as **static HTML**.
+
+## How It Works
+
+```
+┌─────────────────────────────────────────────┐
+│  STATIC HTML (No JavaScript)                │
+│  ┌─────────┐                                │
+│  │ Island  │ ← Hydrated independently       │
+│  │ (React) │                                │
+│  └─────────┘                                │
+│                      ┌─────────┐            │
+│  Static content...   │ Island  │ ← Qwik     │
+│                      │ (Qwik)  │            │
+│                      └─────────┘            │
+│  More static HTML...                        │
+└─────────────────────────────────────────────┘
+```
+
+## Benefits
+
+| Feature | Traditional SPA | Islands Architecture |
+|---------|----------------|---------------------|
+| Initial JS | Full bundle | Zero/Minimal |
+| Hydration | Full page | Per-island |
+| Time to Interactive | Slow | Fast |
+| SEO | Requires SSR | Native |
+
+## Interactive Island Demo
+
+<ToggleTheme client:visible />
+
+This toggle component is an **island** - it loads JS only when visible!
+
