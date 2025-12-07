@@ -9,8 +9,8 @@ import { TraditionalServerAnimation } from '../../components/q/TraditionalServer
 # THE TRADITIONAL WAY
 ## How Servers Build Pages Today
 
-Most web frameworks assemble pages on the server without prioritizing performance.
-The result? **Heavy JavaScript bundles** shipped to every user's browser.
+The server must **fully construct the HTML** before sending ANYTHING to the user.
+One slow API? The **entire page is blocked**. User sees a blank screen.
 
 <TraditionalServerAnimation client:visible />
 
@@ -23,59 +23,67 @@ The result? **Heavy JavaScript bundles** shipped to every user's browser.
 | **3. SEO Friendly** | Crawlable, indexed, fast FCP |
 | **4. Performant** | Fast load times, smooth interactions |
 
-## The Traditional Approach
+## The Blocking Problem
 
 ```
-SERVER SIDE:
-├── ✅ Assembles HTML from templates
-├── ✅ Fetches data from APIs/Database  
-├── ✅ Handles personalization
-├── ✅ Server-side rendering works...
+REQUEST: User asks for /dashboard
+
+SERVER MUST WAIT FOR EVERYTHING:
+├── Database query.............. 200ms ✓
+├── External API call........... 2400ms 🐌 SLOW!
+├── User profile fetch.......... 150ms ✓
 │
-└── BUT THEN...
-    └── 📦 Bundles ENTIRE framework + app code
-    └── 📤 Ships 2MB+ JavaScript to browser
+└── BLOCKED! Can't send ANYTHING until ALL complete
+    └── User stares at blank screen for 2.7+ seconds
+    └── THEN server starts building HTML
+    └── THEN bundles JavaScript (2-5MB)
+    └── THEN sends response
+    
+TOTAL TIME TO FIRST BYTE: ~3 seconds
+TOTAL TIME TO INTERACTIVE: ~6-8 seconds 😱
 ```
 
-## The Problem Cascade
+## The Waterfall of Delays
 
 ```
-1. USER REQUESTS PAGE
-   └── Server does its job well ✓
-
-2. SERVER RESPONDS  
-   └── HTML arrives quickly ✓
-   └── But also ships massive JS bundle ✗
-
-3. BROWSER MUST:
-   └── Download 2MB+ of JavaScript 
-   └── Parse all that code
-   └── Execute framework initialization
-   └── "Hydrate" every component
-   └── FINALLY... page is interactive
-
-4. PERFORMANCE FIX? 
-   └── Add CDN caching
-   └── Add service workers
-   └── Code splitting (still ships too much)
-   └── Lazy loading (complexity++)
-   └── 💸 More infrastructure, more cost
+Timeline:
+0s ─────────────────────────────────────────── 8s
+│                                              │
+├─ Request ─┤                                  │
+│           ├── Server waiting... ──────┤      │
+│           │   (slowest API blocks!)   │      │
+│           │                           ├─ Build HTML
+│           │                           ├─ Bundle JS
+│                                       ├───── Download ────┤
+│                                              ├─ Parse JS ─┤
+│                                                    ├─ Hydrate ─┤
+│                                                               └─ READY!
+│
+└── User sees: BLANK PAGE ─────────────────────────────────────┘
 ```
 
-## The Core Issue
+## Then We Ship Heavy JavaScript
 
-> 🎯 **Performance becomes an afterthought.**  
-> We build features first, then scramble to optimize later.  
-> Caching and CDNs are band-aids, not solutions.
+```
+SERVER FINALLY RESPONDS WITH:
+├── HTML document (constructed from all data)
+├── JavaScript bundle: 2-5MB
+│   ├── React/Vue/Angular runtime
+│   ├── All component code  
+│   ├── State management library
+│   ├── Router
+│   ├── Form validation
+│   └── Everything... even for static content!
+```
 
-## What If...
+## The Core Issues
 
-What if we could have **all the content features** we need:
-- ✅ Static content
-- ✅ Dynamic data
-- ✅ Personalization  
-- ✅ Interactivity
+> 🎯 **Two major problems:**
+>
+> 1. **Blocking HTML** - Server waits for slowest data source before sending anything
+> 2. **Heavy JavaScript** - Ships entire framework to browser
+>
+> Performance is an afterthought. We fix with CDN caching...
+> But that creates NEW problems →
 
-...but **ship almost zero JavaScript** to the browser?
-
-*That's where Astro comes in. →*
+*Let's see what happens when we add CDN caching... →*
