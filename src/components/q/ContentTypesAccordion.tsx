@@ -59,7 +59,6 @@ export const ContentTypesAccordion = component$(() => {
 
   return (
     <div class="content-types-accordion">
-      <div class="accordion-label">// Content Types Examples</div>
       <div class="accordion-items">
         
         {/* Static Content */}
@@ -71,7 +70,6 @@ export const ContentTypesAccordion = component$(() => {
           >
             <span class="accordion-icon">📄</span>
             <span class="accordion-title">Static Content</span>
-            <span class="accordion-description">Renders INSTANTLY — pure HTML, JavaScript: ZERO</span>
             <span class="accordion-arrow">{openItems.value.has('static') ? '▼' : '▶'}</span>
           </button>
           {openItems.value.has('static') && (
@@ -132,9 +130,7 @@ export const ContentTypesAccordion = component$(() => {
                   </div>
                 </div>
               </div>
-              <div class="accordion-info">
-                <p>Headers, footers, navigation, articles — renders instantly with zero JavaScript.</p>
-              </div>
+              
             </div>
           )}
         </div>
@@ -148,7 +144,6 @@ export const ContentTypesAccordion = component$(() => {
           >
             <span class="accordion-icon">🔄</span>
             <span class="accordion-title">Dynamic Content</span>
-            <span class="accordion-description">Server streams content — no client JS</span>
             <span class="accordion-arrow">{openItems.value.has('dynamic') ? '▼' : '▶'}</span>
           </button>
           {openItems.value.has('dynamic') && (
@@ -184,9 +179,6 @@ export const ContentTypesAccordion = component$(() => {
                   </div>
                 </div>
               </div>
-              <div class="accordion-info">
-                <p>Product listings, news articles, search results — server fetches and renders at request time.</p>
-              </div>
             </div>
           )}
         </div>
@@ -200,7 +192,6 @@ export const ContentTypesAccordion = component$(() => {
           >
             <span class="accordion-icon">👤</span>
             <span class="accordion-title">Personalized Content</span>
-            <span class="accordion-description">Server Islands — personalized without client JS</span>
             <span class="accordion-arrow">{openItems.value.has('personal') ? '▼' : '▶'}</span>
           </button>
           {openItems.value.has('personal') && (
@@ -248,9 +239,6 @@ export const ContentTypesAccordion = component$(() => {
                   </div>
                 </div>
               </div>
-              <div class="accordion-info">
-                <p>User greetings, personalized recommendations — server streams HTML with skeleton loading.</p>
-              </div>
             </div>
           )}
         </div>
@@ -264,7 +252,6 @@ export const ContentTypesAccordion = component$(() => {
           >
             <span class="accordion-icon">🏝️</span>
             <span class="accordion-title">Interactive Content</span>
-            <span class="accordion-description">JavaScript loads ONLY when user interacts (~5-15kb)</span>
             <span class="accordion-arrow">{openItems.value.has('interactive') ? '▼' : '▶'}</span>
           </button>
           {openItems.value.has('interactive') && (
@@ -325,11 +312,11 @@ export const ContentTypesAccordion = component$(() => {
                   </div>
                   {!hydratedIslands.value.has('form') ? (
                     <div class="hydration-hint-accordion">
-                      <span>👆</span> Click to hydrate — JS loads on-demand (~8kb)
+                      {/* <span>👆</span> Click to hydrate — JS loads on-demand (~8kb) */}
                     </div>
                   ) : (
                     <div class="hydrated-indicator-accordion">
-                      <span>⚡</span> Hydrated! JS Loaded (~8kb) — Form is now interactive
+                      {/* <span>⚡</span> Hydrated! JS Loaded (~8kb) — Form is now interactive */}
                     </div>
                   )}
                 </div>
@@ -390,11 +377,11 @@ export const ContentTypesAccordion = component$(() => {
                   </div>
                   {!hydratedIslands.value.has('carousel') ? (
                     <div class="hydration-hint-accordion">
-                      <span>👆</span> Click to hydrate — JS loads on-demand (~5kb)
+                      {/* <span>👆</span> Click to hydrate — JS loads on-demand (~5kb) */}
                     </div>
                   ) : (
                     <div class="hydrated-indicator-accordion">
-                      <span>⚡</span> Hydrated! JS Loaded (~5kb) — Use arrows or dots to navigate
+                      {/* <span>⚡</span> Hydrated! JS Loaded (~5kb) — Use arrows or dots to navigate */}
                     </div>
                   )}
                 </div>
@@ -405,9 +392,6 @@ export const ContentTypesAccordion = component$(() => {
                     ↺ Reset Demo
                   </button>
                 )}
-              </div>
-              <div class="accordion-info">
-                <p>Forms, carousels, modals — renders as HTML initially, JavaScript loads only when user interacts. <strong>Try clicking the components above!</strong></p>
               </div>
             </div>
           )}

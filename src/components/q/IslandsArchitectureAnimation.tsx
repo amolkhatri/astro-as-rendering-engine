@@ -47,15 +47,15 @@ export const IslandsArchitectureAnimation = component$(() => {
       const sequence = [2, 3, 4, 5, 6, 7];
       let i = 0;
       
-      const interval = setInterval(() => {
-        if (i < sequence.length) {
-          step.value = sequence[i];
-          i++;
-        } else {
-          clearInterval(interval);
-          isPlaying.value = false;
-        }
-      }, 1000);
+      // const interval = setInterval(() => {
+      //   if (i < sequence.length) {
+      //     step.value = sequence[i];
+      //     i++;
+      //   } else {
+      //     clearInterval(interval);
+      //     isPlaying.value = false;
+      //   }
+      // }, 1000);
     }, 600);
     
     return () => clearTimeout(timer);

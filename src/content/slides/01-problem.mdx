@@ -24,9 +24,7 @@ import { CDNCacheAnimation } from '../../components/q/CDNCacheAnimation';
 
 <section id="intro" class="slide-section">
 
-## Introduction
-
-Client Requirements:
+Websites are typically built to be:
 1. Content Driven 
 <ContentTypesAccordion client:visible />
   
@@ -48,21 +46,17 @@ Client Requirements:
 <section id="cdn" class="slide-section">
 
 ## THE CDN "FIX"
-### When Caching Makes Things Worse
-
-Performance is slow? Add a CDN cache! Problem solved... right?
-**Wrong.** Now we've created an even bigger problem.
 
 <CDNCacheAnimation client:visible />
 
-## The Problem
+{/* ## The Problem
 1. Static section cached on CDN where as dynamic/personalised content loaded from client.
 2. This puts lot of javascript on the client side. Making the browser slow.
 3. We need to engineer the dynamic content carefully to load it from client.
 4. Error prone and difficult to maintain.
 5. Not SEO friendly.
 6. Chaning the framework, will require a lot of changes in the codebase.
-7. As there is not much restiction on developer, they keep adding more and more javascript to the client side. Making page slower. 
+7. As there is not much restiction on developer, they keep adding more and more javascript to the client side. Making page slower.  */}
 
 
 </section>

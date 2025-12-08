@@ -279,7 +279,7 @@ export const CDNCacheAnimation = component$(() => {
       )}
 
       {/* Key Problem */}
-      <div class="cdn-problem">
+      {/* <div class="cdn-problem">
         <div class="problem-title">⚠️ THE KEY PROBLEM</div>
         <div class="problem-content">
           <div class="problem-point">
@@ -311,7 +311,7 @@ export const CDNCacheAnimation = component$(() => {
             <span class="point-text">Carefully engineering the dynamic content to load it from client is error prone and difficult to maintain.</span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* The Triangle Dilemma */}
       <div class="cdn-problem triangle-section">
