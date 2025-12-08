@@ -11,3 +11,5 @@ const slides = defineCollection({
 
 export const collections = { slides };
 
+
+
