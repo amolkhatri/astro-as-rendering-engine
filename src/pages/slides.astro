@@ -4096,5 +4096,743 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     color: #b47cff;
     font-weight: 600;
   }
+
+  /* ========================================
+     Content Types Accordion Styles
+     ======================================== */
+  .content-types-accordion {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .accordion-label {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .accordion-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .accordion-item {
+    background: var(--bg-terminal);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .accordion-item.open {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+  }
+
+  .accordion-header:hover {
+    background: var(--accent-dim);
+  }
+
+  .accordion-item.open .accordion-header {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .accordion-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .accordion-title {
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 0 0 auto;
+    min-width: 180px;
+  }
+
+  .accordion-description {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    flex: 1;
+    margin-left: 0.5rem;
+  }
+
+  .accordion-item.open .accordion-description {
+    color: var(--text-secondary);
+  }
+
+  .accordion-arrow {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-left: auto;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .accordion-item.open .accordion-arrow {
+    color: var(--accent);
+    transform: rotate(90deg);
+  }
+
+  .accordion-content {
+    padding: 0 1.25rem 1.25rem;
+    animation: slideDown 0.2s ease;
+  }
+
+  /* Visual Mockups Container */
+  .accordion-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .visual-section {
+    position: relative;
+    border-radius: 6px;
+    padding: 0.75rem;
+    padding-top: 1.5rem;
+  }
+
+  /* Static Visual */
+  .static-visual {
+    background: rgba(100, 100, 120, 0.15);
+    border: 1px solid rgba(100, 100, 120, 0.3);
+  }
+
+  /* Dynamic Visual */
+  .dynamic-visual {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+  }
+
+  /* Personal Visual */
+  .personal-visual {
+    background: rgba(138, 43, 226, 0.15);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+  }
+
+  /* Interactive Visual */
+  .interactive-visual {
+    background: rgba(0, 255, 65, 0.08);
+    border: 2px dashed rgba(0, 255, 65, 0.3);
+  }
+
+  /* Badges */
+  .visual-badge {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: rgba(100, 100, 120, 0.3);
+    color: #a0a0b0;
+  }
+
+  .dynamic-badge-accordion {
+    background: rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+  }
+
+  .personal-badge-accordion {
+    background: rgba(138, 43, 226, 0.3);
+    color: #b47cff;
+  }
+
+  .interactive-badge-accordion {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* Navigation Mock */
+  .nav-mock-accordion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-terminal);
+    border-radius: 4px;
+  }
+
+  .nav-logo-accordion {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+
+  .nav-links-accordion {
+    display: flex;
+    gap: 1rem;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+
+  /* Content Grid Mock */
+  .content-grid-accordion {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .content-card-accordion {
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.5rem;
+  }
+
+  .card-image-accordion {
+    height: 30px;
+    background: linear-gradient(135deg, var(--bg-code) 0%, var(--border) 100%);
+    border-radius: 3px;
+    margin-bottom: 0.35rem;
+  }
+
+  .card-title-accordion {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.15rem;
+  }
+
+  .card-desc-accordion {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+  }
+
+  /* Footer Mock */
+  .footer-mock-accordion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-terminal);
+    border-radius: 4px;
+  }
+
+  .footer-links-accordion {
+    display: flex;
+    gap: 1rem;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+  }
+
+  .footer-copyright-accordion {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* Dynamic Content Mock */
+  .dynamic-content-accordion {
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.75rem;
+  }
+
+  .dynamic-title-accordion {
+    font-size: 0.8rem;
+    color: #ffc107;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .dynamic-grid-accordion {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dynamic-item-accordion {
+    background: var(--bg-code);
+    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .dynamic-image-accordion {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .dynamic-name-accordion {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+  }
+
+  .dynamic-price-accordion {
+    font-size: 0.65rem;
+    color: #ffc107;
+    font-weight: 600;
+  }
+
+  /* Server Badge */
+  .server-badge-accordion {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.5rem;
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: #ffc107;
+    width: fit-content;
+  }
+
+  .server-badge-accordion.personal {
+    background: rgba(138, 43, 226, 0.2);
+    border-color: rgba(138, 43, 226, 0.4);
+    color: #b47cff;
+  }
+
+  /* Hero Mock */
+  .hero-mock-accordion {
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.75rem;
+  }
+
+  .hero-greeting-accordion {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .user-name-accordion {
+    color: #b47cff;
+    font-weight: 600;
+  }
+
+  .hero-subtitle-accordion {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-stats-accordion {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-accordion {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    padding: 0.25rem 0.5rem;
+    background: rgba(138, 43, 226, 0.2);
+    border-radius: 3px;
+  }
+
+  /* Recommendations Mock */
+  .recs-mock-accordion {
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.75rem;
+  }
+
+  .recs-title-accordion {
+    font-size: 0.8rem;
+    color: #b47cff;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .recs-grid-accordion {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .rec-card-accordion {
+    background: var(--bg-code);
+    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .rec-image-accordion {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .rec-title-item-accordion {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+  }
+
+  /* Form Mock */
+  .form-mock-accordion {
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.75rem;
+  }
+
+  .form-title-accordion {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .form-field-accordion {
+    margin-bottom: 0.4rem;
+  }
+
+  .field-label-accordion {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 0.15rem;
+  }
+
+  .field-input-accordion {
+    height: 20px;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .field-textarea-accordion {
+    height: 35px;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .form-button-accordion {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: var(--bg-code);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 0.75rem;
+    border-radius: 3px;
+    margin-top: 0.35rem;
+  }
+
+  /* Carousel Mock */
+  .carousel-mock-accordion {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-terminal);
+    border-radius: 4px;
+    padding: 0.75rem;
+  }
+
+  .carousel-arrow-accordion {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-dim);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .carousel-slides-accordion {
+    flex: 1;
+    display: flex;
+    gap: 0.35rem;
+    overflow: hidden;
+  }
+
+  .carousel-slide-accordion {
+    flex: 0 0 50%;
+    height: 50px;
+    background: linear-gradient(135deg, var(--bg-code) 0%, var(--border) 100%);
+    border-radius: 4px;
+    opacity: 0.5;
+  }
+
+  .carousel-slide-accordion.active {
+    opacity: 1;
+    border: 1px solid var(--border);
+  }
+
+  .carousel-dots-accordion {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 0.5rem;
+  }
+
+  .carousel-dot-accordion {
+    width: 6px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 50%;
+  }
+
+  .carousel-dot-accordion.active {
+    background: var(--accent);
+  }
+
+  /* Hydration Hint */
+  .hydration-hint-accordion {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background: var(--accent-dim);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--accent);
+    width: fit-content;
+  }
+
+  /* Hydrated State */
+  .interactive-visual.hydrated {
+    border-style: solid;
+    border-color: var(--accent);
+    background: rgba(0, 255, 65, 0.12);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+  }
+
+  .hydrated-indicator-accordion {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--accent);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--bg-terminal);
+    font-weight: 600;
+    width: fit-content;
+    animation: pulse-glow 2s ease infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 65, 0.8); }
+  }
+
+  /* Real Form Inputs */
+  .field-input-real {
+    width: 100%;
+    height: 28px;
+    background: var(--bg-code);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .field-input-real:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  }
+
+  .field-input-real::placeholder {
+    color: var(--text-dim);
+  }
+
+  .field-textarea-real {
+    width: 100%;
+    height: 50px;
+    background: var(--bg-code);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.35rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    outline: none;
+    resize: none;
+    transition: all 0.2s;
+  }
+
+  .field-textarea-real:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  }
+
+  .field-textarea-real::placeholder {
+    color: var(--text-dim);
+  }
+
+  .form-button-real {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: var(--bg-terminal);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .form-button-real:hover:not(:disabled) {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .form-button-real:disabled {
+    cursor: not-allowed;
+  }
+
+  .form-button-real.submitted {
+    background: #27ca40;
+    border-color: #27ca40;
+  }
+
+  /* Active Carousel Arrows */
+  .carousel-arrow-accordion.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .carousel-arrow-accordion.active:hover {
+    background: var(--accent-dim);
+    transform: scale(1.1);
+  }
+
+  .carousel-arrow-accordion:disabled {
+    cursor: default;
+  }
+
+  /* Carousel Slides with labels */
+  .carousel-slide-accordion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .slide-label {
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .interactive-visual.hydrated .carousel-slide-accordion.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  /* Carousel dots as buttons */
+  .carousel-dot-accordion {
+    border: none;
+    padding: 0;
+    cursor: default;
+    transition: all 0.2s;
+  }
+
+  .interactive-visual.hydrated .carousel-dot-accordion {
+    cursor: pointer;
+  }
+
+  .interactive-visual.hydrated .carousel-dot-accordion:hover {
+    transform: scale(1.3);
+  }
+
+  .interactive-visual.hydrated .carousel-dot-accordion.active {
+    background: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+  }
+
+  /* Reset Demo Button */
+  .reset-demo-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--bg-terminal);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .reset-demo-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Info Text */
+  .accordion-info {
+    padding: 0.75rem;
+    background: var(--bg-code);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .accordion-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .accordion-info strong {
+    color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .content-grid-accordion,
+    .dynamic-grid-accordion,
+    .recs-grid-accordion {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-mock-accordion,
+    .footer-mock-accordion {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .nav-links-accordion,
+    .footer-links-accordion {
+      justify-content: center;
+    }
+  }
 </style>
 
