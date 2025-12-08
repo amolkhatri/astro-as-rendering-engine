@@ -37,14 +37,31 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         </div>
         <nav class="topics-nav">
           {sortedSlides.map((slide, idx) => (
-            <a 
-              href={`#slide-${idx + 1}`} 
-              class="topic-btn"
-              data-slide={idx + 1}
-            >
-              <span class="topic-icon">{slide.data.icon || '•'}</span>
-              <span class="topic-title">{slide.data.title}</span>
-            </a>
+            <div class="topic-group">
+              <a 
+                href={`#slide-${idx + 1}`} 
+                class="topic-btn"
+                data-slide={idx + 1}
+              >
+                <span class="topic-icon">{slide.data.icon || '•'}</span>
+                <span class="topic-title">{slide.data.title}</span>
+              </a>
+              {slide.data.sections && slide.data.sections.length > 0 && (
+                <div class="topic-sections">
+                  {slide.data.sections.map((section) => (
+                    <a 
+                      href={`#slide-${idx + 1}-${section.id}`}
+                      class="section-btn"
+                      data-slide={idx + 1}
+                      data-section={section.id}
+                    >
+                      <span class="section-icon">{section.icon || '·'}</span>
+                      <span class="section-title">{section.title}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
         <div class="sidebar-footer">
@@ -85,6 +102,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       // Intersection Observer for active slide tracking
       const slides = document.querySelectorAll('.slide');
       const navLinks = document.querySelectorAll('.topic-btn');
+      const sectionLinks = document.querySelectorAll('.section-btn');
       const pageDots = document.querySelectorAll('.page-dot');
 
       const observer = new IntersectionObserver((entries) => {
@@ -95,7 +113,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
             // Update nav links
             navLinks.forEach(link => {
               link.classList.remove('active');
-              if (link.dataset.slide === slideNum) {
+              if ((link as HTMLElement).dataset.slide === slideNum) {
                 link.classList.add('active');
               }
             });
@@ -103,7 +121,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
             // Update page dots
             pageDots.forEach(dot => {
               dot.classList.remove('active');
-              if (dot.dataset.slide === slideNum) {
+              if ((dot as HTMLElement).dataset.slide === slideNum) {
                 dot.classList.add('active');
               }
             });
@@ -113,12 +131,44 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
       slides.forEach(slide => observer.observe(slide));
 
-      // Smooth scroll for nav clicks
+      // Section Observer for active section tracking
+      const sections = document.querySelectorAll('.slide-section');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            
+            sectionLinks.forEach(link => {
+              link.classList.remove('active');
+              if ((link as HTMLElement).dataset.section === sectionId) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      sections.forEach(section => sectionObserver.observe(section));
+
+      // Smooth scroll for nav clicks (slides)
       document.querySelectorAll('a[href^="#slide-"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
           e.preventDefault();
-          const target = document.querySelector(anchor.getAttribute('href'));
-          target?.scrollIntoView({ behavior: 'smooth' });
+          const href = anchor.getAttribute('href');
+          if (!href) return;
+          
+          // Check if it's a section link (contains a second dash after "slide-")
+          const parts = href.replace('#slide-', '').split('-');
+          if (parts.length > 1) {
+            // Section link: #slide-1-intro -> scroll to #intro
+            const sectionId = parts.slice(1).join('-');
+            const target = document.getElementById(sectionId);
+            target?.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // Slide link: #slide-1 -> scroll to slide
+            const target = document.querySelector(href);
+            target?.scrollIntoView({ behavior: 'smooth' });
+          }
         });
       });
 
@@ -133,7 +183,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         
         // Optional: Save state to localStorage
         const isHidden = sidebar?.classList.contains('hidden');
-        localStorage.setItem('sidebar-hidden', isHidden);
+        localStorage.setItem('sidebar-hidden', String(isHidden));
       });
 
       // Restore state
@@ -341,6 +391,52 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     opacity: 1;
   }
 
+  .topic-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topic-sections {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .section-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+  }
+
+  .section-btn:hover {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .section-btn.active {
+    background: rgba(0, 255, 170, 0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .section-icon {
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 0.65rem;
+  }
+
+  .section-title {
+    flex: 1;
+  }
+
   .sidebar-footer {
     padding: 1rem;
     border-top: 1px solid var(--border);
@@ -391,6 +487,19 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .slide-content {
     width: 100%;
     max-width: 100%;
+  }
+
+  /* Slide Sections */
+  .slide-section {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+    scroll-margin-top: 2rem;
+  }
+
+  .slide-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
   }
 
   /* MDX Content Styles */
@@ -1279,6 +1388,140 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border: 1px solid rgba(244, 63, 94, 0.2);
     border-radius: 4px;
     padding: 1rem;
+  }
+
+  /* Triangle Dilemma Styles */
+  .triangle-section {
+    margin-top: 1rem;
+  }
+
+  .triangle-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem auto;
+    max-width: 500px;
+    min-height: 320px;
+  }
+
+  .triangle-svg {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+
+  .triangle-label {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  .triangle-label.top {
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .triangle-label.bottom-left {
+    bottom: -10px;
+    left: 0;
+  }
+
+  .triangle-label.bottom-right {
+    bottom: -10px;
+    right: 0;
+  }
+
+  .triangle-label .label-icon {
+    font-size: 1.75rem;
+  }
+
+  .triangle-label .label-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .triangle-label .label-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+  }
+
+  .triangle-explanation {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+
+  .explanation-title {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .sacrifice-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .sacrifice-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .sacrifice-combo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .sacrifice-lose {
+    font-size: 0.9rem;
+    color: #f43f5e;
+    font-weight: 600;
+  }
+
+  .sacrifice-why {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .triangle-container {
+      min-height: 280px;
+    }
+    
+    .triangle-label .label-icon {
+      font-size: 1.25rem;
+    }
+    
+    .triangle-label .label-text {
+      font-size: 0.8rem;
+    }
+    
+    .triangle-label .label-desc {
+      font-size: 0.65rem;
+    }
+    
+    .sacrifice-options {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* ========================================

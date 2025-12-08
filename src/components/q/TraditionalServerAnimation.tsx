@@ -238,54 +238,10 @@ export const TraditionalServerAnimation = component$(() => {
       </div>
 
       {/* Timeline */}
-      <div class="trad-timeline">
-        <div class="timeline-header">
-          <span class="timeline-icon">⏱️</span>
-          <span class="timeline-title">TIMELINE</span>
-          <span class="timeline-elapsed">Elapsed: {getElapsedTime()}</span>
-        </div>
-        <div class="timeline-track">
-          <div class="timeline-fill" style={`width: ${(step.value / 10) * 100}%`}></div>
-          <div class="timeline-markers">
-            <div class={`marker ${step.value >= 2 ? 'reached' : ''}`} style="left: 5%">
-              <span class="marker-label">Static Ready</span>
-            </div>
-            <div class={`marker ${step.value >= 6 ? 'reached' : ''}`} style="left: 45%">
-              <span class="marker-label">Dynamic Ready</span>
-            </div>
-            <div class={`marker ${step.value >= 8 ? 'reached' : ''}`} style="left: 65%">
-              <span class="marker-label">TTFB</span>
-            </div>
-            <div class={`marker ${step.value >= 10 ? 'reached' : ''}`} style="left: 95%">
-              <span class="marker-label">TTI</span>
-            </div>
-          </div>
-        </div>
-        <div class="timeline-legend">
-          <span class="legend-item static-legend">■ Static: 15ms</span>
-          <span class="legend-item dynamic-legend">■ Dynamic: 2.85s (blocks everything!)</span>
-          <span class="legend-item total-legend">■ Total TTI: ~6s</span>
-        </div>
-      </div>
+      
 
       {/* Key Problem */}
-      <div class="trad-problem">
-        <div class="problem-title">⚠️ THE KEY PROBLEM</div>
-        <div class="problem-content">
-          <div class="problem-point">
-            <span class="point-icon">🚫</span>
-            <span class="point-text">Static content ready in <strong>15ms</strong> — but server can't send it!</span>
-          </div>
-          <div class="problem-point">
-            <span class="point-icon">🐌</span>
-            <span class="point-text">One slow API (<strong>2.5s</strong>) blocks the ENTIRE page</span>
-          </div>
-          <div class="problem-point">
-            <span class="point-icon">📦</span>
-            <span class="point-text">Then we ship <strong>2.4MB JavaScript</strong> on top of that!</span>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 });

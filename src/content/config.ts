@@ -6,6 +6,11 @@ const slides = defineCollection({
     title: z.string(),
     order: z.number(),
     icon: z.string().optional(),
+    sections: z.array(z.object({
+      id: z.string(),
+      title: z.string(),
+      icon: z.string().optional(),
+    })).optional(),
   }),
 });
 
