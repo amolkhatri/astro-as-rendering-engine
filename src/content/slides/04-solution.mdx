@@ -6,11 +6,59 @@ icon: "✨"
 
 import { SolutionAnimation } from '../../components/q/SolutionAnimation';
 import { FrameworkAgnosticDiagram } from '../../components/q/FrameworkAgnosticDiagram';
+import frameworkComparisonMobile from '../../assets/framework-comparison-mobile.png';
+import frameworkComparisonDesktop from '../../assets/framework-comparison-desktop.png';
+import frameworkComparisonLinkMobile from '../../assets/framework-comparison-mobile-2.png';
+import frameworkComparisonLinkDesktop from '../../assets/framework-comparison-desktop-2.png';
+import news1 from '../../assets/news1.png';
+import news2 from '../../assets/news2.png';
 
 # The Solution
 
-## Framework Agnostic
-
-Use **any framework** you want — Astro works with them all!
+1. Supports Islands Architecture
+2. Supports Server Side Rendering
+3. No JavaScript on the client side by default.
+4. Framework Agnostic
 
 <FrameworkAgnosticDiagram client:visible />
+
+{/* <a href="https://lookerstudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC?params=%7B%22df44%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580WordPress%25EE%2580%2580React%25EE%2580%2580Next.js%25EE%2580%2580Nuxt.js%25EE%2580%2580Gatsby%25EE%2580%2580Astro%25EE%2580%2580SvelteKit%25EE%2580%2580Remix%25EE%2580%2580SolidJS%22,%22df46%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580mobile%22%7D"> link</a> */}
+
+## Core Web Vitals Score vs Frameworks Comparison <a href="https://lookerstudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC?params=%7B%22df44%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580WordPress%25EE%2580%2580React%25EE%2580%2580Next.js%25EE%2580%2580Nuxt.js%25EE%2580%2580Gatsby%25EE%2580%2580Astro%25EE%2580%2580SvelteKit%25EE%2580%2580Remix%25EE%2580%2580SolidJS%22,%22df46%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580mobile%22%7D" target="_blank" rel="noopener noreferrer">link</a>
+<a href="https://httparchive.org/reports/techreport/tech?good-cwv-over-time=overall&tech=ALL%2CAstro%2CReact%2CQwik%2CSolidJS%2CVue.js&geo=ALL&rank=ALL&page=1&client=mobile#good-cwvs" target="_blank" rel="noopener noreferrer">httparchive link</a>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+  <div style="text-align: center;">
+    <span style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em;">📱 MOBILE</span>
+    <img src={frameworkComparisonMobile.src} alt="Framework Comparison - Mobile" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 100%;" />
+  </div>
+  <div style="text-align: center;">
+    <span style="display: inline-block; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🖥️ DESKTOP</span>
+    <img src={frameworkComparisonDesktop.src} alt="Framework Comparison - Desktop" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 100%;" />
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+  <div style="text-align: center;">
+    <span style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em;">📱 MOBILE</span>
+    <img src={frameworkComparisonLinkMobile.src} alt="INP Comparison - Mobile" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 100%;" />
+  </div>
+  <div style="text-align: center;">
+    <span style="display: inline-block; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🖥️ DESKTOP</span>
+    <img src={frameworkComparisonLinkDesktop.src} alt="INP Comparison - Desktop" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 100%;" />
+  </div>
+</div>
+
+
+## 📰 In the News
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+  <a href="https://www.webpronews.com/cloudflare-funds-astro-with-150k-in-webflow-netlify-partnerships/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block; transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <img src={news1.src} alt="Cloudflare Funds Astro with $150K" style="width: 100%; display: block; border-radius: 12px;" />
+  </a>
+  <a href="https://blog.cloudflare.com/cloudflare-astro-tanstack/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block; transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <img src={news2.src} alt="Cloudflare Blog - Why Cloudflare, Netlify, and Webflow support Astro" style="width: 100%; display: block; border-radius: 12px;" />
+  </a>
+</div>
+
+
+https://theguardian.engineering/

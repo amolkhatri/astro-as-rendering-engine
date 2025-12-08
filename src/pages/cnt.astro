@@ -69,17 +69,24 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         border-radius: 4px;
         padding: 1.5rem;
         margin: 2rem 0;
+        width: 100%;
+        height: calc(100vh - 6rem);
+        min-height: 700px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
       }
 
       .ipa-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
         border-bottom: 1px dashed var(--border);
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 0.75rem;
+        flex-shrink: 0;
       }
 
       .ipa-title {
@@ -120,6 +127,9 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         display: grid;
         grid-template-columns: 1fr 280px;
         gap: 1.5rem;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
       }
 
       @media (max-width: 900px) {
@@ -132,6 +142,11 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         border: 1px solid var(--border);
         border-radius: 8px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
       }
 
       .browser-chrome {
@@ -141,6 +156,7 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         padding: 0.75rem 1rem;
         background: var(--bg-terminal);
         border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
       }
 
       .browser-dots { display: flex; gap: 6px; }
@@ -166,8 +182,10 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
-        max-height: 500px;
+        flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 0;
       }
 
       /* Page Sections */
