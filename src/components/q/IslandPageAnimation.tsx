@@ -1,9 +1,29 @@
-import { component$, useSignal, $ } from '@builder.io/qwik';
+import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
 
 export const IslandPageAnimation = component$(() => {
   const interactedIsland = useSignal<string | null>(null);
   const hoveredSection = useSignal<string | null>(null);
   const showDetails = useSignal(false);
+  const personalizedLoaded = useSignal(false);
+  const isLoadingPersonalized = useSignal(true);
+
+  // Simulate server island loading personalized content
+  useVisibleTask$(() => {
+    // Start loading after a short delay
+    const loadTimer = setTimeout(() => {
+      isLoadingPersonalized.value = true;
+      
+      // Simulate server fetching personalized data
+      const dataTimer = setTimeout(() => {
+        personalizedLoaded.value = true;
+        isLoadingPersonalized.value = false;
+      }, 1500);
+      
+      return () => clearTimeout(dataTimer);
+    }, 800);
+    
+    return () => clearTimeout(loadTimer);
+  });
 
   const handleIslandClick = $((islandId: string) => {
     if (interactedIsland.value === islandId) {
@@ -21,6 +41,18 @@ export const IslandPageAnimation = component$(() => {
     showDetails.value = !showDetails.value;
   });
 
+  const resetDemo = $(() => {
+    personalizedLoaded.value = false;
+    isLoadingPersonalized.value = true;
+    interactedIsland.value = null;
+    
+    // Restart the loading simulation
+    setTimeout(() => {
+      personalizedLoaded.value = true;
+      isLoadingPersonalized.value = false;
+    }, 1500);
+  });
+
   return (
     <div class="island-page-anim">
       {/* Header */}
@@ -29,9 +61,14 @@ export const IslandPageAnimation = component$(() => {
           <span class="ipa-icon">🏝️</span>
           <span class="ipa-label">PAGE STRUCTURE WITH ISLANDS</span>
         </div>
-        <button class="ipa-toggle" onClick$={toggleDetails}>
-          {showDetails.value ? '◉ Hide Details' : '○ Show Details'}
-        </button>
+        <div class="ipa-controls">
+          <button class="ipa-toggle" onClick$={resetDemo}>
+            ↺ Replay
+          </button>
+          <button class="ipa-toggle" onClick$={toggleDetails}>
+            {showDetails.value ? '◉ Hide Details' : '○ Show Details'}
+          </button>
+        </div>
       </div>
 
       <div class="ipa-layout">
@@ -73,25 +110,48 @@ export const IslandPageAnimation = component$(() => {
               </div>
             </div>
 
-            {/* Hero - Dynamic/Personalized */}
+            {/* Hero - Dynamic/Personalized (Server Island) */}
             <div 
-              class={`page-section dynamic-section ${hoveredSection.value === 'hero' ? 'hovered' : ''}`}
+              class={`page-section dynamic-section ${hoveredSection.value === 'hero' ? 'hovered' : ''} ${personalizedLoaded.value ? 'loaded' : ''}`}
               onMouseEnter$={() => handleHover('hero')}
               onMouseLeave$={() => handleHover(null)}
             >
               <div class="section-content">
-                <div class="hero-mock">
-                  <div class="hero-greeting">Welcome back, <span class="user-name">Sarah!</span></div>
-                  <div class="hero-subtitle">Here's what's new today</div>
-                  <div class="hero-stats">
-                    <span class="stat">📊 12 new updates</span>
-                    <span class="stat">📬 3 messages</span>
+                {!personalizedLoaded.value ? (
+                  <div class="hero-mock skeleton-container">
+                    <div class="skeleton-greeting">
+                      <div class="skeleton-line short"></div>
+                    </div>
+                    <div class="skeleton-subtitle">
+                      <div class="skeleton-line medium"></div>
+                    </div>
+                    <div class="skeleton-stats">
+                      <div class="skeleton-stat"></div>
+                      <div class="skeleton-stat"></div>
+                    </div>
+                    <div class="loading-indicator">
+                      <span class="loading-spinner"></span>
+                      <span class="loading-text">Fetching user data from server...</span>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div class="hero-mock loaded-content">
+                    <div class="hero-greeting">Welcome back, <span class="user-name">Sarah!</span></div>
+                    <div class="hero-subtitle">Here's what's new today</div>
+                    <div class="hero-stats">
+                      <span class="stat">📊 12 new updates</span>
+                      <span class="stat">📬 3 messages</span>
+                    </div>
+                    <div class="server-rendered-badge">
+                      <span class="server-icon">🖥️</span>
+                      <span class="server-text">Server rendered — No client JS!</span>
+                    </div>
+                  </div>
+                )}
               </div>
               <div class="section-badge dynamic-badge">
                 <span class="badge-icon">👤</span>
-                <span class="badge-text">PERSONALIZED</span>
+                <span class="badge-text">SERVER ISLAND</span>
               </div>
             </div>
 
@@ -123,6 +183,52 @@ export const IslandPageAnimation = component$(() => {
               <div class="section-badge static-badge">
                 <span class="badge-icon">📄</span>
                 <span class="badge-text">STATIC</span>
+              </div>
+            </div>
+
+            {/* Recommendations - Server Island (Personalized) */}
+            <div 
+              class={`page-section dynamic-section ${hoveredSection.value === 'recs' ? 'hovered' : ''} ${personalizedLoaded.value ? 'loaded' : ''}`}
+              onMouseEnter$={() => handleHover('recs')}
+              onMouseLeave$={() => handleHover(null)}
+            >
+              <div class="section-content">
+                <div class="recs-title">Recommended for you</div>
+                {!personalizedLoaded.value ? (
+                  <div class="recs-grid skeleton-container">
+                    <div class="rec-card skeleton">
+                      <div class="skeleton-image"></div>
+                      <div class="skeleton-line short"></div>
+                    </div>
+                    <div class="rec-card skeleton">
+                      <div class="skeleton-image"></div>
+                      <div class="skeleton-line short"></div>
+                    </div>
+                    <div class="rec-card skeleton">
+                      <div class="skeleton-image"></div>
+                      <div class="skeleton-line short"></div>
+                    </div>
+                  </div>
+                ) : (
+                  <div class="recs-grid loaded-content">
+                    <div class="rec-card">
+                      <div class="rec-image">🎧</div>
+                      <div class="rec-title">Podcast: Tech</div>
+                    </div>
+                    <div class="rec-card">
+                      <div class="rec-image">📚</div>
+                      <div class="rec-title">Your Reading List</div>
+                    </div>
+                    <div class="rec-card">
+                      <div class="rec-image">⭐</div>
+                      <div class="rec-title">Based on History</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div class="section-badge dynamic-badge">
+                <span class="badge-icon">👤</span>
+                <span class="badge-text">SERVER ISLAND</span>
               </div>
             </div>
 
@@ -248,15 +354,16 @@ export const IslandPageAnimation = component$(() => {
             <div class="info-section">
               <div class="info-header dynamic-header">
                 <span class="info-icon">👤</span>
-                <span class="info-title">DYNAMIC / PERSONALIZED</span>
+                <span class="info-title">SERVER ISLANDS</span>
               </div>
               <div class="info-content">
-                <p>Server-rendered at request time</p>
+                <p>Server-rendered personalized content</p>
                 <ul>
-                  <li>✓ User-specific data</li>
-                  <li>✓ No client JS needed</li>
-                  <li>✓ Data stays on server</li>
-                  <li>✓ SEO friendly</li>
+                  <li>✓ Shows skeleton first</li>
+                  <li>✓ Server fetches user data</li>
+                  <li>✓ Streams HTML to browser</li>
+                  <li>✓ No client JS needed!</li>
+                  <li>✓ Secure: data on server</li>
                 </ul>
               </div>
             </div>
@@ -283,27 +390,29 @@ export const IslandPageAnimation = component$(() => {
       {/* JS Summary */}
       <div class="ipa-summary">
         <div class="summary-item">
-          <span class="summary-label">Static HTML:</span>
-          <span class="summary-value static-value">6 sections</span>
+          <span class="summary-label">Static:</span>
+          <span class="summary-value static-value">4 sections</span>
         </div>
         <div class="summary-divider">|</div>
         <div class="summary-item">
-          <span class="summary-label">Islands:</span>
-          <span class="summary-value island-value">2 components</span>
+          <span class="summary-label">Server Islands:</span>
+          <span class={`summary-value ${personalizedLoaded.value ? 'server-loaded' : 'server-loading'}`}>
+            {personalizedLoaded.value ? '2 ✓' : '2 loading...'}
+          </span>
         </div>
         <div class="summary-divider">|</div>
         <div class="summary-item">
-          <span class="summary-label">JS Loaded:</span>
+          <span class="summary-label">Interactive:</span>
+          <span class="summary-value island-value">2 islands</span>
+        </div>
+        <div class="summary-divider">|</div>
+        <div class="summary-item">
+          <span class="summary-label">Client JS:</span>
           <span class={`summary-value ${interactedIsland.value ? 'js-loaded' : 'js-zero'}`}>
             {interactedIsland.value === null && '0kb'}
             {interactedIsland.value === 'form' && '~8kb'}
             {interactedIsland.value === 'carousel' && '~5kb'}
           </span>
-        </div>
-        <div class="summary-divider">|</div>
-        <div class="summary-item">
-          <span class="summary-label">Traditional SPA:</span>
-          <span class="summary-value spa-value">~2-5MB</span>
         </div>
       </div>
 
@@ -311,8 +420,9 @@ export const IslandPageAnimation = component$(() => {
       <div class="ipa-insight">
         <div class="insight-icon">💡</div>
         <div class="insight-text">
-          <strong>Key Insight:</strong> JavaScript is only downloaded when users actually interact with an island. 
-          The page is fully visible and usable with <span class="highlight">zero JavaScript</span> initially loaded.
+          <strong>Key Insight:</strong> Static content renders instantly. 
+          <span class="highlight">Server Islands</span> stream personalized content from the server (no client JS!). 
+          <span class="highlight">Interactive Islands</span> load JavaScript only when users actually interact.
         </div>
       </div>
     </div>
