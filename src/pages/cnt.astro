@@ -11,31 +11,38 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style>
       /* Import styles from slides page */
       :root {
-        --bg-primary: #0a0a0a;
-        --bg-secondary: #050505;
-        --bg-terminal: #000000;
-        --bg-code: #0d1117;
-        --accent: #00ff41;
-        --accent-dim: #00ff4130;
-        --accent-glow: 0 0 10px rgba(0, 255, 65, 0.4), 0 0 20px rgba(0, 255, 65, 0.2);
-        --text-primary: #00ff41;
-        --text-secondary: #00cc33;
-        --text-dim: #007722;
-        --text-muted: #004411;
-        --border: #00ff4125;
-        --font-mono: 'Fira Code', monospace;
+        /* Modern Dark Theme */
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-terminal: #020617;
+        --bg-code: #1e293b;
+        
+        /* Vibrant Accent */
+        --accent: #818cf8;
+        --accent-dim: rgba(129, 140, 248, 0.15);
+        --accent-glow: 0 0 20px rgba(129, 140, 248, 0.3);
+        
+        /* Text */
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-dim: #94a3b8;
+        --text-muted: #64748b;
+        --border: #334155;
+        
+        --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        --font-sans: 'Inter', system-ui, sans-serif;
       }
       
       * { box-sizing: border-box; margin: 0; padding: 0; }
       
       body {
-        font-family: var(--font-mono);
+        font-family: var(--font-sans);
         background: var(--bg-primary);
         color: var(--text-primary);
         padding: 2rem;
@@ -175,46 +182,46 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
       .page-section.hovered { transform: translateX(4px); }
 
       .static-section {
-        background: rgba(100, 100, 120, 0.15);
-        border: 1px solid rgba(100, 100, 120, 0.3);
+        background: rgba(148, 163, 184, 0.15);
+        border: 1px solid rgba(148, 163, 184, 0.3);
       }
 
       .static-section.hovered {
-        border-color: rgba(100, 100, 120, 0.6);
-        background: rgba(100, 100, 120, 0.2);
+        border-color: rgba(148, 163, 184, 0.6);
+        background: rgba(148, 163, 184, 0.2);
       }
 
       .dynamic-section {
-        background: rgba(138, 43, 226, 0.15);
-        border: 1px solid rgba(138, 43, 226, 0.3);
+        background: rgba(129, 140, 248, 0.15);
+        border: 1px solid rgba(129, 140, 248, 0.3);
       }
 
       .dynamic-section.hovered {
-        border-color: rgba(138, 43, 226, 0.6);
-        background: rgba(138, 43, 226, 0.25);
+        border-color: rgba(129, 140, 248, 0.6);
+        background: rgba(129, 140, 248, 0.25);
       }
 
       .dynamic-section.loaded {
-        border-color: rgba(138, 43, 226, 0.6);
-        box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+        border-color: rgba(129, 140, 248, 0.6);
+        box-shadow: 0 0 15px rgba(129, 140, 248, 0.2);
       }
 
       .island-section {
-        background: rgba(0, 255, 65, 0.08);
-        border: 2px dashed rgba(0, 255, 65, 0.3);
+        background: rgba(14, 165, 233, 0.08);
+        border: 2px dashed rgba(14, 165, 233, 0.3);
         cursor: pointer;
       }
 
       .island-section.hovered {
-        border-color: rgba(0, 255, 65, 0.6);
-        background: rgba(0, 255, 65, 0.12);
+        border-color: rgba(14, 165, 233, 0.6);
+        background: rgba(14, 165, 233, 0.12);
       }
 
       .island-section.hydrated {
         border-style: solid;
         border-color: var(--accent);
-        background: rgba(0, 255, 65, 0.2);
-        box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        background: rgba(14, 165, 233, 0.2);
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
       }
 
       /* Section Badges */
@@ -232,8 +239,8 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
         letter-spacing: 0.05em;
       }
 
-      .static-badge { background: rgba(100, 100, 120, 0.3); color: #a0a0b0; }
-      .dynamic-badge { background: rgba(138, 43, 226, 0.3); color: #b47cff; }
+      .static-badge { background: rgba(148, 163, 184, 0.3); color: #94a3b8; }
+      .dynamic-badge { background: rgba(129, 140, 248, 0.3); color: #818cf8; }
       .island-badge { background: var(--accent-dim); color: var(--accent); }
       .badge-icon { font-size: 0.8rem; }
 
@@ -269,8 +276,8 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
       }
 
       @keyframes glow-indicator {
-        0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.3); }
-        50% { box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
+        0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.3); }
+        50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
       }
 
       /* Mock Content Styles */
@@ -282,10 +289,10 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
 
       .hero-mock { padding: 0.5rem 0; }
       .hero-greeting { font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
-      .user-name { color: #b47cff; font-weight: 600; }
+      .user-name { color: #818cf8; font-weight: 600; }
       .hero-subtitle { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.5rem; }
       .hero-stats { display: flex; gap: 1rem; }
-      .hero-stats .stat { font-size: 0.75rem; color: var(--text-secondary); padding: 0.25rem 0.5rem; background: rgba(138, 43, 226, 0.2); border-radius: 3px; }
+      .hero-stats .stat { font-size: 0.75rem; color: var(--text-secondary); padding: 0.25rem 0.5rem; background: rgba(129, 140, 248, 0.2); border-radius: 3px; }
 
       .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .content-card { background: var(--bg-terminal); border-radius: 4px; padding: 0.5rem; }
@@ -322,8 +329,8 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
       .ipa-info-panel { display: flex; flex-direction: column; gap: 0.75rem; }
       .info-section { background: var(--bg-code); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
       .info-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.75rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; }
-      .static-header { background: rgba(100, 100, 120, 0.2); color: #a0a0b0; }
-      .dynamic-header { background: rgba(138, 43, 226, 0.2); color: #b47cff; }
+      .static-header { background: rgba(148, 163, 184, 0.2); color: #94a3b8; }
+      .dynamic-header { background: rgba(129, 140, 248, 0.2); color: #818cf8; }
       .island-header { background: var(--accent-dim); color: var(--accent); }
       .info-icon { font-size: 1rem; }
       .info-content { padding: 0.75rem; }
@@ -336,18 +343,18 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
       .summary-item { display: flex; align-items: center; gap: 0.5rem; }
       .summary-label { font-size: 0.85rem; color: var(--text-dim); }
       .summary-value { font-size: 0.9rem; font-weight: 600; }
-      .static-value { color: #a0a0b0; }
+      .static-value { color: #94a3b8; }
       .island-value { color: var(--accent); }
       .js-zero { color: var(--accent); text-shadow: var(--accent-glow); }
       .js-loaded { color: var(--accent); }
-      .server-loading { color: #b47cff; animation: pulse-text 1s ease infinite; }
-      .server-loaded { color: #b47cff; font-weight: 600; }
+      .server-loading { color: #818cf8; animation: pulse-text 1s ease infinite; }
+      .server-loaded { color: #818cf8; font-weight: 600; }
       .summary-divider { color: var(--border); }
 
       @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
       /* Insight */
-      .ipa-insight { display: flex; align-items: flex-start; gap: 0.75rem; margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(0, 255, 65, 0.05) 100%); border: 1px solid var(--accent); border-radius: 6px; }
+      .ipa-insight { display: flex; align-items: flex-start; gap: 0.75rem; margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(14, 165, 233, 0.05) 100%); border: 1px solid var(--accent); border-radius: 6px; }
       .insight-icon { font-size: 1.5rem; flex-shrink: 0; }
       .insight-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
       .insight-text strong { color: var(--accent); }
@@ -355,7 +362,7 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
 
       /* Skeleton Loading Styles */
       .skeleton-container { position: relative; }
-      .skeleton-line { height: 14px; background: linear-gradient(90deg, rgba(138, 43, 226, 0.2) 25%, rgba(138, 43, 226, 0.4) 50%, rgba(138, 43, 226, 0.2) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
+      .skeleton-line { height: 14px; background: linear-gradient(90deg, rgba(129, 140, 248, 0.2) 25%, rgba(129, 140, 248, 0.4) 50%, rgba(129, 140, 248, 0.2) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
       .skeleton-line.short { width: 60%; }
       .skeleton-line.medium { width: 80%; height: 12px; margin-top: 0.5rem; }
 
@@ -364,32 +371,32 @@ import { IslandPageAnimation } from '../components/q/IslandPageAnimation';
       .skeleton-greeting { margin-bottom: 0.25rem; }
       .skeleton-subtitle { margin-bottom: 0.5rem; }
       .skeleton-stats { display: flex; gap: 0.75rem; margin-bottom: 0.5rem; }
-      .skeleton-stat { width: 80px; height: 24px; background: linear-gradient(90deg, rgba(138, 43, 226, 0.15) 25%, rgba(138, 43, 226, 0.3) 50%, rgba(138, 43, 226, 0.15) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
+      .skeleton-stat { width: 80px; height: 24px; background: linear-gradient(90deg, rgba(129, 140, 248, 0.15) 25%, rgba(129, 140, 248, 0.3) 50%, rgba(129, 140, 248, 0.15) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
 
-      .loading-indicator { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.7rem; color: #b47cff; }
-      .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(138, 43, 226, 0.3); border-top-color: #b47cff; border-radius: 50%; animation: spin 1s linear infinite; }
+      .loading-indicator { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.7rem; color: #818cf8; }
+      .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(129, 140, 248, 0.3); border-top-color: #818cf8; border-radius: 50%; animation: spin 1s linear infinite; }
       .loading-text { opacity: 0.8; }
       @keyframes spin { to { transform: rotate(360deg); } }
 
       .loaded-content { animation: fadeInContent 0.5s ease; }
       @keyframes fadeInContent { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-      .server-rendered-badge { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; padding: 0.3rem 0.5rem; background: rgba(138, 43, 226, 0.2); border: 1px solid rgba(138, 43, 226, 0.4); border-radius: 4px; font-size: 0.7rem; color: #b47cff; width: fit-content; }
+      .server-rendered-badge { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; padding: 0.3rem 0.5rem; background: rgba(129, 140, 248, 0.2); border: 1px solid rgba(129, 140, 248, 0.4); border-radius: 4px; font-size: 0.7rem; color: #818cf8; width: fit-content; }
       .server-icon { font-size: 0.85rem; }
 
       /* Recommendations Section */
-      .recs-title { font-size: 0.8rem; color: #b47cff; margin-bottom: 0.5rem; font-weight: 600; }
+      .recs-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; font-weight: 600; }
       .recs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .rec-card { background: var(--bg-terminal); border-radius: 4px; padding: 0.5rem; text-align: center; }
       .rec-card.skeleton { padding: 0.5rem; }
-      .skeleton-image { height: 30px; background: linear-gradient(90deg, rgba(138, 43, 226, 0.15) 25%, rgba(138, 43, 226, 0.3) 50%, rgba(138, 43, 226, 0.15) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; margin-bottom: 0.35rem; }
+      .skeleton-image { height: 30px; background: linear-gradient(90deg, rgba(129, 140, 248, 0.15) 25%, rgba(129, 140, 248, 0.3) 50%, rgba(129, 140, 248, 0.15) 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; border-radius: 4px; margin-bottom: 0.35rem; }
       .rec-card.skeleton .skeleton-line { height: 10px; width: 70%; margin: 0 auto; }
       .rec-image { font-size: 1.25rem; margin-bottom: 0.25rem; }
       .rec-title { font-size: 0.65rem; color: var(--text-secondary); }
     </style>
   </head>
   <body>
-    <h1># ISLAND ARCHITECTURE DEMO</h1>
+    <h1>ISLAND ARCHITECTURE DEMO</h1>
     <p>Watch how static content appears instantly, personalized content streams from the server (with skeleton loading), and interactive islands hydrate only when you click them.</p>
     <IslandPageAnimation client:visible />
   </body>

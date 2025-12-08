@@ -1,0 +1,62 @@
+<div class="perf-studies-grid">
+  <div class="study-card">
+    <img src="https://placehold.co/600x400/222/fff?text=Core+Web+Vitals" alt="Core Web Vitals Study" />
+    <p>Core Web Vitals Benchmark</p>
+  </div>
+  <div class="study-card">
+    <img src="https://placehold.co/600x400/222/fff?text=JS+Bundle+Size" alt="JS Bundle Size Study" />
+    <p>JavaScript Bundle Size Comparison</p>
+  </div>
+  <div class="study-card">
+    <img src="https://placehold.co/600x400/222/fff?text=Time+to+Interactive" alt="TTI Study" />
+    <p>Time to Interactive (TTI) Metrics</p>
+  </div>
+  <div class="study-card">
+    <img src="https://placehold.co/600x400/222/fff?text=Lighthouse+Scores" alt="Lighthouse Study" />
+    <p>Real-world Lighthouse Scores</p>
+  </div>
+</div>
+
+<style>
+  .perf-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+    max-width: 1000px;
+  }
+
+  .study-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(30, 30, 30, 0.4);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .study-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .study-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #000;
+  }
+
+  .study-card p {
+    margin: 0.8rem 0 0 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e0e0e0;
+    text-align: center;
+  }
+</style>
+

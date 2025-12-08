@@ -9,41 +9,42 @@ interface Topic {
     description: string;
     features: string[];
     codeExample?: string;
+    images?: { src: string; caption: string }[];
   };
 }
 
 const topics: Topic[] = [
   {
     id: 'intro',
-    title: 'init --framework',
-    icon: '>_',
+    title: 'Introduction',
+    icon: '🚀',
     content: {
-      heading: 'ASTRO.INIT // The Web Framework for Content',
+      heading: 'Astro: The Web Framework for Content-Driven Websites',
       description:
-        'Astro is an all-in-one web framework for building fast, content-focused websites. It ships zero JavaScript by default and uses a unique "Islands Architecture" to hydrate interactive components only when needed.',
+        'Astro is a modern web framework designed for building fast, content-focused websites. It delivers exceptional performance by shipping zero JavaScript by default and using a unique "Islands Architecture" to load interactive components only when needed.',
       features: [
-        'ship_js: false // Zero JavaScript by default',
-        'hydration: "selective" // Component Islands architecture',
-        'frameworks: ["react", "vue", "svelte", "qwik", "vanilla"]',
-        'deploy: ["edge", "ssg", "ssr"] // Deploy anywhere',
-        'optimize: { images: true, fonts: true, assets: true }',
+        'Ships zero JavaScript by default for lightning-fast page loads',
+        'Islands Architecture enables selective component hydration',
+        'Framework agnostic — works with React, Vue, Svelte, and more',
+        'Flexible deployment: Static, Server-Side, or Edge rendering',
+        'Built-in optimization for images, fonts, and assets',
       ],
     },
   },
   {
     id: 'islands',
-    title: 'architecture.islands',
-    icon: '◊',
+    title: 'Islands Architecture',
+    icon: '🏝️',
     content: {
-      heading: 'ISLANDS.ARCH // Partial Hydration Pattern',
+      heading: 'Islands Architecture: Smarter Hydration for Better Performance',
       description:
-        'Islands Architecture is a web architecture pattern that Astro pioneered. Instead of hydrating the entire page with JavaScript, only the interactive "islands" get hydrated while the rest remains as static HTML.',
+        'Islands Architecture is a revolutionary web pattern pioneered by Astro. Instead of loading JavaScript for the entire page, only the interactive "islands" receive JavaScript while the rest remains as fast, static HTML.',
       features: [
-        'render: "static" + interactive_islands[]',
-        'hydration: "independent" // Each island self-contained',
-        'bundle_size: "minimal" // Dramatically reduced payload',
-        'use_case: "content-heavy + selective interactivity"',
-        'metrics: { LCP: "fast", FID: "instant", CLS: 0 }',
+        'Static HTML with targeted interactive components',
+        'Each island loads independently — no blocking',
+        'Dramatically smaller JavaScript bundles',
+        'Ideal for content-heavy sites with selective interactivity',
+        'Excellent Core Web Vitals: Fast LCP, Instant FID, Zero CLS',
       ],
       codeExample: `---
 // Static Astro component
@@ -60,18 +61,18 @@ import InteractiveCounter from './Counter.tsx';
   },
   {
     id: 'components',
-    title: '.astro components',
-    icon: '{ }',
+    title: 'Astro Components',
+    icon: '🧩',
     content: {
-      heading: 'COMPONENTS.ASTRO // HTML-First Architecture',
+      heading: 'Astro Components: HTML-First Development',
       description:
-        'Astro components (.astro files) are HTML-first components with a powerful templating syntax. They run at build time and produce zero JavaScript output by default.',
+        'Astro components (.astro files) put HTML first with a powerful templating syntax. They run at build time and produce zero JavaScript output by default, resulting in faster websites.',
       features: [
-        'syntax: "html-first" + frontmatter_logic',
-        'render: "server-side" // SSR by default',
-        'interface: { props, slots, expressions }',
-        'styles: "scoped" // Built-in CSS isolation',
-        'import: any_framework_component // Universal',
+        'HTML-first syntax that feels familiar and intuitive',
+        'Server-side rendering by default for optimal performance',
+        'Clean component interface with props and slots',
+        'Built-in scoped CSS — no style conflicts',
+        'Import components from any framework seamlessly',
       ],
       codeExample: `---
 // Frontmatter - runs at build time
@@ -97,18 +98,18 @@ const date = new Date().toLocaleDateString();
   },
   {
     id: 'qwik',
-    title: '@qwikdev/astro',
+    title: 'Qwik Integration',
     icon: '⚡',
     content: {
-      heading: 'QWIK.INTEGRATE // Resumable Framework',
+      heading: 'Qwik + Astro: Instant Interactivity at Scale',
       description:
-        'Qwik is a resumable framework that brings instant interactivity with near-zero JavaScript. Combined with Astro, you get the best of both worlds: content-focused static pages with blazing-fast interactive islands.',
+        'Qwik is a resumable framework that delivers instant interactivity with near-zero JavaScript overhead. Combined with Astro, you get the perfect blend of content-focused static pages with blazing-fast interactive islands.',
       features: [
-        'mode: "resumable" // No hydration overhead',
-        'handlers: "lazy-loaded" // On-demand JS',
-        'reactivity: "signals" // Fine-grained updates',
-        'state: "serializable" // Instant resume',
-        'loading: "progressive" // Ship JS incrementally',
+        'Resumable execution — no hydration performance penalty',
+        'Event handlers load on-demand, not upfront',
+        'Fine-grained reactivity through signals',
+        'Serializable state for instant page resume',
+        'Progressive JavaScript loading as needed',
       ],
       codeExample: `import { component$, useSignal } from '@builder.io/qwik';
 
@@ -128,18 +129,18 @@ export const Counter = component$(() => {
   },
   {
     id: 'routing',
-    title: 'src/pages/**/*',
-    icon: '/',
+    title: 'File-Based Routing',
+    icon: '📁',
     content: {
-      heading: 'ROUTER.FILE_SYSTEM // Convention over Config',
+      heading: 'Intuitive File-Based Routing',
       description:
-        'Astro uses a file-based routing system where the file structure in your src/pages directory determines your routes. Simple, intuitive, and powerful.',
+        'Astro uses a file-based routing system where your folder structure in src/pages automatically becomes your URL structure. Simple, intuitive, and zero configuration required.',
       features: [
-        'routes: auto_generate(file_structure)',
-        'dynamic: "[param].astro" // URL parameters',
-        'layouts: "_layout.astro" // Nested templates',
-        'api: "*.ts" | "*.js" // REST endpoints',
-        'catch_all: "[...slug].astro" // Wildcard routes',
+        'Routes automatically generated from file structure',
+        'Dynamic routes with URL parameters',
+        'Nested layouts for consistent page structure',
+        'API endpoints with TypeScript support',
+        'Catch-all routes for flexible URL handling',
       ],
       codeExample: `src/pages/
 ├── index.astro          → /
@@ -155,18 +156,39 @@ export const Counter = component$(() => {
   },
   {
     id: 'performance',
-    title: 'benchmark --perf',
-    icon: '◉',
+    title: 'Performance',
+    icon: '📊',
     content: {
-      heading: 'PERF.OPTIMIZE // Built for Speed',
+      heading: 'Built for Performance from Day One',
       description:
-        'Astro was designed from the ground up for performance. With zero JS by default, automatic optimizations, and smart loading strategies, your sites are fast out of the box.',
+        'Astro was designed from the ground up for exceptional performance. With zero JavaScript by default, automatic optimizations, and smart loading strategies, your websites are fast without any extra work.',
       features: [
-        'lighthouse: { performance: 100, accessibility: 100 }',
-        'images: astro:assets // Auto-optimization',
-        'css: { bundle: true, minify: true }',
-        'navigation: "prefetch" // Instant page loads',
-        'transitions: ViewTransitionsAPI // Native support',
+        'Achieves 100 Lighthouse performance score out of the box',
+        'Automatic image optimization with modern formats',
+        'CSS bundling and minification included',
+        'Intelligent prefetching for instant navigation',
+        'Native View Transitions API support for smooth UX',
+      ],
+    },
+  },
+  {
+    id: 'studies',
+    title: 'Performance Studies',
+    icon: '📈',
+    content: {
+      heading: 'Real-World Performance Metrics',
+      description: 'Benchmarks and studies showing how Astro outperforms traditional frameworks in key metrics like Core Web Vitals, Bundle Size, and Time to Interactive.',
+      features: [
+        'Consistently higher Core Web Vitals scores',
+        'Significantly reduced JavaScript bundle sizes',
+        'Faster Time to Interactive (TTI)',
+        'Better SEO performance',
+      ],
+      images: [
+        { src: 'https://placehold.co/600x400/222/fff?text=Core+Web+Vitals', caption: 'Core Web Vitals Benchmark' },
+        { src: 'https://placehold.co/600x400/222/fff?text=JS+Bundle+Size', caption: 'JavaScript Bundle Size Comparison' },
+        { src: 'https://placehold.co/600x400/222/fff?text=Time+to+Interactive', caption: 'Time to Interactive (TTI) Metrics' },
+        { src: 'https://placehold.co/600x400/222/fff?text=Lighthouse+Scores', caption: 'Real-world Lighthouse Scores' },
       ],
     },
   },
@@ -193,9 +215,9 @@ export const Presentation = component$(() => {
       {/* Sidebar */}
       <aside class="sidebar">
         <div class="sidebar-header">
-          <span class="logo">▶</span>
-          <h1>ASTRO</h1>
-          <span class="subtitle">presentation.exe</span>
+          <span class="logo">✦</span>
+          <h1>Astro Framework</h1>
+          <span class="subtitle">Product Overview</span>
         </div>
         <nav class="topics-nav">
           {topics.map((topic) => (
@@ -206,12 +228,12 @@ export const Presentation = component$(() => {
             >
               <span class="topic-icon">{topic.icon}</span>
               <span class="topic-title">{topic.title}</span>
-              <span class="topic-arrow">_</span>
+              <span class="topic-arrow">→</span>
             </button>
           ))}
         </nav>
         <div class="sidebar-footer">
-          <span class="made-with">astro@5.16 + qwik@1.x</span>
+          <span class="made-with">Built with Astro 5.x & Qwik</span>
         </div>
       </aside>
 
@@ -233,6 +255,17 @@ export const Presentation = component$(() => {
               </div>
             ))}
           </div>
+
+          {currentTopic.content.images && (
+            <div class="studies-grid">
+              {currentTopic.content.images.map((img, idx) => (
+                <div key={idx} class="study-card">
+                  <img src={img.src} alt={img.caption} width={600} height={400} />
+                  <p>{img.caption}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           {currentTopic.content.codeExample && (
             <div class="code-block">
@@ -263,7 +296,7 @@ export const Presentation = component$(() => {
             ))}
           </div>
           <div class="nav-hint">
-            <kbd>select</kbd> module to execute
+            <kbd>Click</kbd> to navigate between topics
           </div>
         </footer>
       </main>
