@@ -5,14 +5,10 @@ export const CDNCacheAnimation = component$(() => {
   const isPlaying = useSignal(false);
 
   const steps = [
-    { id: 0, label: 'IDLE', desc: 'The "performance fix"...' },
-    { id: 1, label: 'CACHE', desc: 'Adding CDN cache layer...' },
-    { id: 2, label: 'FAST', desc: 'Page loads fast! ✓' },
-    { id: 3, label: 'PROBLEM', desc: 'But wait... personalization?' },
-    { id: 4, label: 'STATIC', desc: 'CDN serves same page to everyone!' },
-    { id: 5, label: 'FIX', desc: 'Solution: Move logic to client...' },
-    { id: 6, label: 'MORE_JS', desc: 'Ship MORE JavaScript!' },
-    { id: 7, label: 'WORSE', desc: 'Problem is now worse 😱' },
+    { id: 0, label: 'IDLE', desc: 'Ready to request /dashboard' },
+    { id: 1, label: 'CDN', desc: 'CDN serves cached static shell' },
+    { id: 2, label: 'SERVER', desc: 'Server renders dynamic data' },
+    { id: 3, label: 'CLIENT', desc: 'Browser hydrates via JS' },
   ];
 
   const reset = $(() => {
@@ -25,7 +21,7 @@ export const CDNCacheAnimation = component$(() => {
     isPlaying.value = true;
     step.value = 0;
 
-    const sequence = [1, 2, 3, 4, 5, 6, 7];
+    const sequence = [1, 2, 3];
     let i = 0;
 
     const interval = setInterval(() => {
@@ -36,7 +32,7 @@ export const CDNCacheAnimation = component$(() => {
         clearInterval(interval);
         isPlaying.value = false;
       }
-    }, 1200);
+    }, 1100);
   });
 
   useVisibleTask$(() => {
@@ -44,7 +40,7 @@ export const CDNCacheAnimation = component$(() => {
       isPlaying.value = true;
       step.value = 1;
 
-      const sequence = [2, 3, 4, 5, 6, 7];
+      const sequence = [2, 3];
       let i = 0;
 
       const interval = setInterval(() => {
@@ -55,21 +51,11 @@ export const CDNCacheAnimation = component$(() => {
           clearInterval(interval);
           isPlaying.value = false;
         }
-      }, 1200);
+      }, 1100);
     }, 600);
 
     return () => clearTimeout(timer);
   });
-
-  const getElapsedTime = () => {
-    if (step.value <= 1) return '0.0s';
-    if (step.value === 2) return '0.05s';
-    if (step.value === 3) return '0.1s';
-    if (step.value === 4) return '0.15s';
-    if (step.value === 5) return '0.2s';
-    if (step.value === 6) return '0.3s';
-    return '0.5s';
-  };
 
   return (
     <div class="cdn-anim">
@@ -91,210 +77,90 @@ export const CDNCacheAnimation = component$(() => {
       <div class="cdn-layout">
         {/* Browser Side */}
         <div class="cdn-browser-side">
-          <div class="side-label">👤 USERS</div>
+          <div class="side-label">👤 Browser</div>
           <div class="browser-screen">
-            {step.value === 0 && (
-              <div class="screen-idle">Ready to request</div>
-            )}
+            {step.value === 0 && <div class="screen-idle">Idle</div>}
             {step.value === 1 && (
               <div class="screen-requesting">
                 <span class="req-arrow">→</span> GET /dashboard
               </div>
             )}
-            {step.value >= 2 && step.value < 4 && (
+            {step.value === 2 && (
               <div class="screen-fast">
-                <span class="fast-icon">⚡</span> Fast response!
+                <span class="fast-icon">⚡</span> Static shell from CDN
                 <div class="fast-time">50ms</div>
               </div>
             )}
-            {step.value >= 4 && step.value < 6 && (
-              <div class="screen-problem">
-                <span class="problem-icon">⚠️</span> Same page for all!
-                <div class="problem-detail">No personalization</div>
-              </div>
-            )}
-            {step.value >= 6 && (
+            {step.value === 3 && (
               <div class="screen-worse">
-                <span class="worse-icon">📦</span> Downloading JS...
-                <div class="worse-size">4.8 MB</div>
+                <span class="worse-icon">📦</span> Client fetching dynamic data...
               </div>
             )}
           </div>
-          {step.value >= 2 && step.value < 4 && (
-            <div class="fast-badge">✓ CDN working!</div>
-          )}
-          {step.value >= 4 && (
-            <div class="problem-badge">⚠️ Features lost!</div>
-          )}
+          {step.value >= 2 && <div class="fast-badge">✓ Static cached</div>}
         </div>
 
-        {/* CDN/Server Side */}
+        {/* CDN Side */}
         <div class="cdn-server-side">
-          <div class="side-label">🌐 CDN + SERVER</div>
+          <div class="side-label">🌐 CDN</div>
           <div class="server-panel">
-            {/* Static Content - Cached Fast */}
             <div class="content-section">
-              <div class="section-header">📄 STATIC CONTENT</div>
-              <div class={`content-item ${step.value >= 2 ? 'ready' : ''}`}>
-                <span class="item-name">HTML Template</span>
+              <div class="section-header">📄 Static Assets</div>
+              <div class={`content-item ${step.value >= 1 ? 'ready' : ''}`}>
+                <span class="item-name">HTML shell</span>
                 <span class="item-status">
-                  {step.value < 2 ? '—' : '✓ Cached'}
+                  {step.value < 1 ? '—' : '✓ Cached'}
                 </span>
               </div>
-              <div class={`content-item ${step.value >= 2 ? 'ready' : ''}`}>
-                <span class="item-name">CSS Styles</span>
+              <div class={`content-item ${step.value >= 1 ? 'ready' : ''}`}>
+                <span class="item-name">CSS / JS chunks</span>
                 <span class="item-status">
-                  {step.value < 2 ? '—' : '✓ Cached'}
+                  {step.value < 1 ? '—' : '✓ Cached'}
                 </span>
               </div>
-              {step.value >= 2 && (
+              {step.value >= 1 && (
                 <div class="section-complete">
-                  ✓ Served from CDN in 50ms — Fast!
+                  ✓ CDN responds instantly
                 </div>
               )}
             </div>
+          </div>
+        </div>
 
-            {/* Dynamic Content - The Problem */}
+        {/* Server + Client data */}
+        <div class="cdn-server-side">
+          <div class="side-label">🖥️ Server</div>
+          <div class="server-panel">
             <div class="content-section dynamic">
-              <div class="section-header">⚡ DYNAMIC CONTENT</div>
-
-              <div class={`content-item ${step.value >= 2 ? 'ready' : ''} ${step.value >= 3 ? 'problem' : ''}`}>
-                <span class="item-name">👤 Personalization</span>
+              <div class="section-header">⚡ Dynamic Content</div>
+              <div class={`content-item ${step.value >= 2 ? 'ready' : ''}`}>
+                <span class="item-name">Personalization</span>
                 <span class="item-status">
-                  {step.value < 2 && '—'}
-                  {step.value === 2 && '✓ Cached'}
-                  {step.value >= 3 && <span class="lost-status">❌ LOST</span>}
+                  {step.value < 2 && '— waiting'}
+                  {step.value === 2 && '↺ rendering'}
+                  {step.value === 3 && <span class="lost-status">→ to client</span>}
                 </span>
               </div>
-
-              <div class={`content-item ${step.value >= 2 ? 'ready' : ''} ${step.value >= 3 ? 'problem' : ''}`}>
-                <span class="item-name">⚡ Dynamic Data</span>
+              <div class={`content-item ${step.value >= 2 ? 'ready' : ''}`}>
+                <span class="item-name">Dynamic Data</span>
                 <span class="item-status">
-                  {step.value < 2 && '—'}
-                  {step.value === 2 && '✓ Cached'}
-                  {step.value >= 3 && <span class="lost-status">❌ LOST</span>}
+                  {step.value < 2 && '— waiting'}
+                  {step.value === 2 && '↺ fetching'}
+                  {step.value === 3 && <span class="lost-status">→ fetched client-side</span>}
                 </span>
               </div>
-
-              <div class={`content-item ${step.value >= 2 ? 'ready' : ''} ${step.value >= 3 ? 'problem' : ''}`}>
-                <span class="item-name">🔄 Real-time Updates</span>
-                <span class="item-status">
-                  {step.value < 2 && '—'}
-                  {step.value === 2 && '✓ Cached'}
-                  {step.value >= 3 && <span class="lost-status">❌ LOST</span>}
-                </span>
-              </div>
-
-              {step.value >= 3 && step.value < 5 && (
-                <div class="blocking-notice">
-                  🚫 CDN serves SAME page to everyone!
-                </div>
-              )}
-
-              {step.value >= 5 && (
+              {step.value === 3 && (
                 <div class="solution-notice">
-                  💡 "Fix": Move to client-side JS
+                  💡 Client JS pulls dynamic content
                 </div>
               )}
             </div>
-
-            {/* Client-Side JS Explosion */}
-            {step.value >= 5 && (
-              <div class="content-section js-explosion">
-                <div class="section-header">📦 CLIENT-SIDE JAVASCRIPT</div>
-
-                <div class={`content-item ${step.value >= 5 ? 'loading' : ''} ${step.value >= 6 ? 'ready' : ''}`}>
-                  <span class="item-name">Auth SDK</span>
-                  <span class="item-status">
-                    {step.value === 5 && <span class="loading-text">⏳ adding...</span>}
-                    {step.value >= 6 && <span class="js-size">+500 KB</span>}
-                  </span>
-                </div>
-
-                <div class={`content-item ${step.value >= 5 ? 'loading' : ''} ${step.value >= 6 ? 'ready' : ''}`}>
-                  <span class="item-name">Personalization Engine</span>
-                  <span class="item-status">
-                    {step.value === 5 && <span class="loading-text">⏳ adding...</span>}
-                    {step.value >= 6 && <span class="js-size">+800 KB</span>}
-                  </span>
-                </div>
-
-                <div class={`content-item ${step.value >= 5 ? 'loading' : ''} ${step.value >= 6 ? 'ready' : ''}`}>
-                  <span class="item-name">API Client</span>
-                  <span class="item-status">
-                    {step.value === 5 && <span class="loading-text">⏳ adding...</span>}
-                    {step.value >= 6 && <span class="js-size">+400 KB</span>}
-                  </span>
-                </div>
-
-                <div class={`content-item ${step.value >= 5 ? 'loading' : ''} ${step.value >= 6 ? 'ready' : ''}`}>
-                  <span class="item-name">State Management</span>
-                  <span class="item-status">
-                    {step.value === 5 && <span class="loading-text">⏳ adding...</span>}
-                    {step.value >= 6 && <span class="js-size">+400 KB</span>}
-                  </span>
-                </div>
-
-                {step.value >= 6 && (
-                  <div class="section-complete worse">
-                    Total: 2.4MB → 4.8MB 😱
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>
 
-      {/* Timeline */}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
       {/* Dilemma + Solution */}
-      {step.value >= 3 && (
-        <div class="dilemma-solution-container">
-          {/* Dilemma Section - stays visible */}
-          <div class="dilemma-section">
-            <div class="dilemma-title">❌ THE DILEMMA</div>
-            <div class="dilemma-content">
-              <div class="lost-feature">
-                <span class="lost-icon">👤</span>
-                <span class="lost-text">Personalization</span>
-                <span class="lost-status">❌ LOST</span>
-              </div>
-              <div class="lost-feature">
-                <span class="lost-icon">⚡</span>
-                <span class="lost-text">Dynamic Content</span>
-                <span class="lost-status">❌ LOST</span>
-              </div>
-              <div class="lost-feature">
-                <span class="lost-icon">🔄</span>
-                <span class="lost-text">Real-time Data</span>
-                <span class="lost-status">❌ LOST</span>
-              </div>
-            </div>
-          </div>
 
-          {/* Solution Section - appears after dilemma */}
-        </div>
-      )}
 
       {/* Key Problem */}
       {/* <div class="cdn-problem">
@@ -332,82 +198,7 @@ export const CDNCacheAnimation = component$(() => {
       </div> */}
 
       {/* The Triangle Dilemma */}
-      <div class="cdn-problem triangle-section">
-        <div class="problem-title">🔺 THE IMPOSSIBLE TRIANGLE</div>
-        <div class="triangle-container">
-          <svg class="triangle-svg" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            {/* Triangle outline */}
-            <polygon
-              points="200,30 50,300 350,300"
-              fill="none"
-              stroke="rgba(255,255,255,0.3)"
-              stroke-width="2"
-            />
 
-            {/* Gradient fill for the triangle */}
-            <defs>
-              <linearGradient id="triangleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.15" />
-                <stop offset="50%" style="stop-color:#4ecdc4;stop-opacity:0.15" />
-                <stop offset="100%" style="stop-color:#ffe66d;stop-opacity:0.15" />
-              </linearGradient>
-            </defs>
-            <polygon
-              points="200,30 50,300 350,300"
-              fill="url(#triangleGrad)"
-            />
-
-            {/* Connecting lines to center */}
-            <line x1="200" y1="30" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
-            <line x1="50" y1="300" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
-            <line x1="350" y1="300" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
-
-            {/* Center question mark */}
-            <circle cx="200" cy="210" r="25" fill="rgba(255,100,100,0.3)" stroke="#ff6b6b" stroke-width="2" />
-            <text x="200" y="218" text-anchor="middle" fill="#ff6b6b" font-size="24" font-weight="bold">?</text>
-          </svg>
-
-          {/* Corner labels positioned outside SVG */}
-          <div class="triangle-label top">
-            <span class="label-icon">⚡</span>
-            <span class="label-text">Performance</span>
-            <span class="label-desc">Fast load times</span>
-          </div>
-
-          <div class="triangle-label bottom-left">
-            <span class="label-icon">📄</span>
-            <span class="label-text">Dynamic Content</span>
-            <span class="label-desc">Personalization & Data</span>
-          </div>
-
-          <div class="triangle-label bottom-right">
-            <span class="label-icon">🔍</span>
-            <span class="label-text">SEO Friendly</span>
-            <span class="label-desc">Search indexable</span>
-          </div>
-        </div>
-
-        <div class="triangle-explanation">
-          <div class="explanation-title">Traditional approaches force you to sacrifice one:</div>
-          <div class="sacrifice-options">
-            <div class="sacrifice-option">
-              <span class="sacrifice-combo">⚡ + 📄</span>
-              <span class="sacrifice-lose">= Lose 🔍 SEO</span>
-              <span class="sacrifice-why">Client-side JS not indexable</span>
-            </div>
-            <div class="sacrifice-option">
-              <span class="sacrifice-combo">⚡ + 🔍</span>
-              <span class="sacrifice-lose">= Lose 📄 Dynamic</span>
-              <span class="sacrifice-why">CDN serves static pages</span>
-            </div>
-            <div class="sacrifice-option">
-              <span class="sacrifice-combo">📄 + 🔍</span>
-              <span class="sacrifice-lose">= Lose ⚡ Speed</span>
-              <span class="sacrifice-why">SSR on every request</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 });
