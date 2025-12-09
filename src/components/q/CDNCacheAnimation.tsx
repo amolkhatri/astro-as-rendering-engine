@@ -24,10 +24,10 @@ export const CDNCacheAnimation = component$(() => {
     if (isPlaying.value) return;
     isPlaying.value = true;
     step.value = 0;
-    
+
     const sequence = [1, 2, 3, 4, 5, 6, 7];
     let i = 0;
-    
+
     const interval = setInterval(() => {
       if (i < sequence.length) {
         step.value = sequence[i];
@@ -43,10 +43,10 @@ export const CDNCacheAnimation = component$(() => {
     const timer = setTimeout(() => {
       isPlaying.value = true;
       step.value = 1;
-      
+
       const sequence = [2, 3, 4, 5, 6, 7];
       let i = 0;
-      
+
       const interval = setInterval(() => {
         if (i < sequence.length) {
           step.value = sequence[i];
@@ -57,7 +57,7 @@ export const CDNCacheAnimation = component$(() => {
         }
       }, 1200);
     }, 600);
-    
+
     return () => clearTimeout(timer);
   });
 
@@ -157,7 +157,7 @@ export const CDNCacheAnimation = component$(() => {
             {/* Dynamic Content - The Problem */}
             <div class="content-section dynamic">
               <div class="section-header">⚡ DYNAMIC CONTENT</div>
-              
+
               <div class={`content-item ${step.value >= 2 ? 'ready' : ''} ${step.value >= 3 ? 'problem' : ''}`}>
                 <span class="item-name">👤 Personalization</span>
                 <span class="item-status">
@@ -202,7 +202,7 @@ export const CDNCacheAnimation = component$(() => {
             {step.value >= 5 && (
               <div class="content-section js-explosion">
                 <div class="section-header">📦 CLIENT-SIDE JAVASCRIPT</div>
-                
+
                 <div class={`content-item ${step.value >= 5 ? 'loading' : ''} ${step.value >= 6 ? 'ready' : ''}`}>
                   <span class="item-name">Auth SDK</span>
                   <span class="item-status">
@@ -247,7 +247,25 @@ export const CDNCacheAnimation = component$(() => {
       </div>
 
       {/* Timeline */}
-      
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
 
       {/* Dilemma + Solution */}
       {step.value >= 3 && (
@@ -319,13 +337,13 @@ export const CDNCacheAnimation = component$(() => {
         <div class="triangle-container">
           <svg class="triangle-svg" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
             {/* Triangle outline */}
-            <polygon 
-              points="200,30 50,300 350,300" 
-              fill="none" 
-              stroke="rgba(255,255,255,0.3)" 
+            <polygon
+              points="200,30 50,300 350,300"
+              fill="none"
+              stroke="rgba(255,255,255,0.3)"
               stroke-width="2"
             />
-            
+
             {/* Gradient fill for the triangle */}
             <defs>
               <linearGradient id="triangleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -334,41 +352,41 @@ export const CDNCacheAnimation = component$(() => {
                 <stop offset="100%" style="stop-color:#ffe66d;stop-opacity:0.15" />
               </linearGradient>
             </defs>
-            <polygon 
-              points="200,30 50,300 350,300" 
+            <polygon
+              points="200,30 50,300 350,300"
               fill="url(#triangleGrad)"
             />
-            
+
             {/* Connecting lines to center */}
             <line x1="200" y1="30" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
             <line x1="50" y1="300" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
             <line x1="350" y1="300" x2="200" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
-            
+
             {/* Center question mark */}
             <circle cx="200" cy="210" r="25" fill="rgba(255,100,100,0.3)" stroke="#ff6b6b" stroke-width="2" />
             <text x="200" y="218" text-anchor="middle" fill="#ff6b6b" font-size="24" font-weight="bold">?</text>
           </svg>
-          
+
           {/* Corner labels positioned outside SVG */}
           <div class="triangle-label top">
             <span class="label-icon">⚡</span>
             <span class="label-text">Performance</span>
             <span class="label-desc">Fast load times</span>
           </div>
-          
+
           <div class="triangle-label bottom-left">
             <span class="label-icon">📄</span>
             <span class="label-text">Dynamic Content</span>
             <span class="label-desc">Personalization & Data</span>
           </div>
-          
+
           <div class="triangle-label bottom-right">
             <span class="label-icon">🔍</span>
             <span class="label-text">SEO Friendly</span>
             <span class="label-desc">Search indexable</span>
           </div>
         </div>
-        
+
         <div class="triangle-explanation">
           <div class="explanation-title">Traditional approaches force you to sacrifice one:</div>
           <div class="sacrifice-options">
