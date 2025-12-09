@@ -233,6 +233,20 @@ export const Presentation = component$(() => {
           ))}
         </nav>
         <div class="sidebar-footer">
+          <button 
+            class="theme-toggle" 
+            onClick$={() => {
+              if (typeof window !== 'undefined' && (window as any).toggleTheme) {
+                (window as any).toggleTheme();
+              }
+            }}
+            aria-label="Toggle theme"
+          >
+            <span class="theme-toggle-label">Theme</span>
+            <div class="theme-toggle-switch">
+              <span class="theme-toggle-knob"></span>
+            </div>
+          </button>
           <span class="made-with">Built with Astro 5.x & Qwik</span>
         </div>
       </aside>

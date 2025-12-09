@@ -19,6 +19,32 @@ import { Presentation } from '../components/q/Presentation';
   </head>
   <body>
     <Presentation client:load />
+    <script is:inline>
+      // Theme toggle functionality
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        // Make toggle function globally available
+        window.toggleTheme = function() {
+          const currentTheme = document.documentElement.getAttribute('data-theme');
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          
+          if (newTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          } else {
+            document.documentElement.removeAttribute('data-theme');
+          }
+          
+          localStorage.setItem('theme', newTheme);
+        };
+      })();
+    </script>
   </body>
 </html>
 
@@ -30,7 +56,7 @@ import { Presentation } from '../components/q/Presentation';
   }
 
   :root {
-    /* Professional Dark Theme - Deep Navy */
+    /* Professional Dark Theme - Deep Navy (Default) */
     --bg-primary: #0a0f1a;
     --bg-secondary: #111827;
     --bg-tertiary: #1a2234;
@@ -72,6 +98,41 @@ import { Presentation } from '../components/q/Presentation';
     /* Typography */
     --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
+  }
+
+  /* Light Theme */
+  [data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-code: #1e293b;
+    
+    /* Brand Colors - Slightly deeper for light mode contrast */
+    --accent-primary: #c2410c;
+    --accent-secondary: #ea580c;
+    --accent-tertiary: #9a3412;
+    --accent-light: rgba(194, 65, 12, 0.08);
+    --accent-gradient: linear-gradient(135deg, #c2410c 0%, #ea580c 50%, #f97316 100%);
+    
+    /* Complementary accent */
+    --accent-cool: #475569;
+    --accent-cool-light: rgba(71, 85, 105, 0.08);
+    
+    /* Text Colors */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    --text-inverse: #ffffff;
+    
+    /* Border & Shadow */
+    --border-color: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(15, 23, 42, 0.15);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+    --shadow-accent: 0 4px 24px rgba(194, 65, 12, 0.2);
+    --shadow-glow: 0 0 60px rgba(194, 65, 12, 0.06);
   }
 
   html,
@@ -266,10 +327,91 @@ import { Presentation } from '../components/q/Presentation';
     padding: 1rem 1.25rem;
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .sidebar-footer::before {
     content: none;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 0.875rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card);
+  }
+
+  .theme-toggle-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .theme-toggle-switch {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+  }
+
+  .theme-toggle-switch::before {
+    content: '🌙';
+    position: absolute;
+    left: 4px;
+    font-size: 0.75rem;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .theme-toggle-switch::after {
+    content: '☀️';
+    position: absolute;
+    right: 4px;
+    font-size: 0.75rem;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  [data-theme="light"] .theme-toggle-switch::before {
+    opacity: 0.4;
+  }
+
+  [data-theme="light"] .theme-toggle-switch::after {
+    opacity: 1;
+  }
+
+  .theme-toggle-knob {
+    width: 20px;
+    height: 20px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    box-shadow: var(--shadow-accent);
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1;
+  }
+
+  [data-theme="light"] .theme-toggle-knob {
+    transform: translateX(22px);
   }
 
   .made-with {

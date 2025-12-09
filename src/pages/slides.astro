@@ -65,7 +65,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
           ))}
         </nav>
         <div class="sidebar-footer">
-          <div class="terminal-footer"></div>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-toggle-label">Theme</span>
+            <div class="theme-toggle-switch">
+              <span class="theme-toggle-knob"></span>
+            </div>
+          </button>
           <span class="made-with">astro@5.x + qwik + mdx</span>
         </div>
       </aside>
@@ -191,6 +196,35 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         sidebar?.classList.add('hidden');
         content?.classList.add('full-width');
       }
+
+      // Theme Toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      
+      // Initialize theme from localStorage or system preference
+      const initTheme = () => {
+        const savedTheme = localStorage.getItem('slides-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      };
+      
+      initTheme();
+      
+      themeToggle?.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        if (newTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        
+        localStorage.setItem('slides-theme', newTheme);
+      });
     </script>
   </body>
 </html>
@@ -203,7 +237,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   :root {
-    /* Modern Dark Theme */
+    /* Modern Dark Theme (Default) */
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --bg-terminal: #020617;
@@ -224,6 +258,26 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     --sidebar-width: 300px;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     --font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Light Theme */
+  [data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-terminal: #f1f5f9;
+    --bg-code: #e2e8f0;
+    
+    /* Accent - deeper for light mode */
+    --accent: #6366f1;
+    --accent-dim: rgba(99, 102, 241, 0.1);
+    --accent-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+    
+    /* Text */
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-dim: #64748b;
+    --text-muted: #94a3b8;
+    --border: #cbd5e1;
   }
 
   html {
@@ -440,6 +494,87 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .sidebar-footer {
     padding: 1rem;
     border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .theme-toggle-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .theme-toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--bg-terminal);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+  }
+
+  .theme-toggle-switch::before {
+    content: '🌙';
+    position: absolute;
+    left: 4px;
+    font-size: 0.7rem;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .theme-toggle-switch::after {
+    content: '☀️';
+    position: absolute;
+    right: 4px;
+    font-size: 0.7rem;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  [data-theme="light"] .theme-toggle-switch::before {
+    opacity: 0.4;
+  }
+
+  [data-theme="light"] .theme-toggle-switch::after {
+    opacity: 1;
+  }
+
+  .theme-toggle-knob {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(129, 140, 248, 0.4);
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1;
+  }
+
+  [data-theme="light"] .theme-toggle-knob {
+    transform: translateX(20px);
   }
 
   .terminal-footer {
