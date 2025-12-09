@@ -1,7 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const slides = await getCollection('slides');
+const slides = await getCollection("slides");
 const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -23,8 +23,22 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   <body>
     <div class="scanlines"></div>
     <div class="presentation">
-      <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button
+        id="sidebar-toggle"
+        class="sidebar-toggle"
+        aria-label="Toggle Sidebar"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
           <line x1="9" y1="3" x2="9" y2="21"></line>
         </svg>
@@ -36,36 +50,42 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
           <span class="subtitle">Modern Rendering Engine</span>
         </div>
         <nav class="topics-nav">
-          {sortedSlides.map((slide, idx) => (
-            <div class="topic-group">
-              <a 
-                href={`#slide-${idx + 1}`} 
-                class="topic-btn"
-                data-slide={idx + 1}
-              >
-                <span class="topic-icon">{slide.data.icon || '•'}</span>
-                <span class="topic-title">{slide.data.title}</span>
-              </a>
-              {slide.data.sections && slide.data.sections.length > 0 && (
-                <div class="topic-sections">
-                  {slide.data.sections.map((section) => (
-                    <a 
-                      href={`#slide-${idx + 1}-${section.id}`}
-                      class="section-btn"
-                      data-slide={idx + 1}
-                      data-section={section.id}
-                    >
-                      <span class="section-icon">{section.icon || '·'}</span>
-                      <span class="section-title">{section.title}</span>
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {
+            sortedSlides.map((slide, idx) => (
+              <div class="topic-group">
+                <a
+                  href={`#slide-${idx + 1}`}
+                  class="topic-btn"
+                  data-slide={idx + 1}
+                >
+                  <span class="topic-icon">{slide.data.icon || "•"}</span>
+                  <span class="topic-title">{slide.data.title}</span>
+                </a>
+                {slide.data.sections && slide.data.sections.length > 0 && (
+                  <div class="topic-sections">
+                    {slide.data.sections.map((section) => (
+                      <a
+                        href={`#slide-${idx + 1}-${section.id}`}
+                        class="section-btn"
+                        data-slide={idx + 1}
+                        data-section={section.id}
+                      >
+                        <span class="section-icon">{section.icon || "·"}</span>
+                        <span class="section-title">{section.title}</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          }
         </nav>
         <div class="sidebar-footer">
-          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            aria-label="Toggle theme"
+          >
             <span class="theme-toggle-label">Theme</span>
             <div class="theme-toggle-switch">
               <span class="theme-toggle-knob"></span>
@@ -76,25 +96,41 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       </aside>
 
       <main class="content">
-        {sortedSlides.map(async (slide, idx) => {
-          const { Content } = await slide.render();
-          return (
-            <section class="slide" id={`slide-${idx + 1}`} data-slide-index={idx} style={idx === 0 ? '' : 'display: none;'}>
-              <div class="slide-number">{String(idx + 1).padStart(2, '0')} / {String(sortedSlides.length).padStart(2, '0')}</div>
-              <article class="slide-content">
-                <Content />
-              </article>
-            </section>
-          );
-        })}
-        
+        {
+          sortedSlides.map(async (slide, idx) => {
+            const { Content } = await slide.render();
+            return (
+              <section
+                class="slide"
+                id={`slide-${idx + 1}`}
+                data-slide-index={idx}
+                style={idx === 0 ? "" : "display: none;"}
+              >
+                <div class="slide-number">
+                  {String(idx + 1).padStart(2, "0")} /{" "}
+                  {String(sortedSlides.length).padStart(2, "0")}
+                </div>
+                <article class="slide-content">
+                  <Content />
+                </article>
+              </section>
+            );
+          })
+        }
+
         <footer class="content-footer">
           <div class="pagination">
-            {sortedSlides.map((_, idx) => (
-              <button class="page-dot" data-slide={idx + 1} aria-label={`Go to slide ${idx + 1}`}>
-                <span class="sr-only">Slide {idx + 1}</span>
-              </button>
-            ))}
+            {
+              sortedSlides.map((_, idx) => (
+                <button
+                  class="page-dot"
+                  data-slide={idx + 1}
+                  aria-label={`Go to slide ${idx + 1}`}
+                >
+                  <span class="sr-only">Slide {idx + 1}</span>
+                </button>
+              ))
+            }
           </div>
           <div class="nav-hint">
             <kbd>click</kbd> sidebar to navigate
@@ -105,9 +141,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
     <script>
       // Slide management
-      const slides = document.querySelectorAll('.slide');
-      const navLinks = document.querySelectorAll('.topic-btn');
-      const pageDots = document.querySelectorAll('.page-dot');
+      const slides = document.querySelectorAll(".slide");
+      const navLinks = document.querySelectorAll(".topic-btn");
+      const pageDots = document.querySelectorAll(".page-dot");
       let currentSlideIndex = 0;
 
       // Function to show a specific slide
@@ -115,33 +151,33 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         // Hide all slides
         slides.forEach((slide, idx) => {
           if (idx === slideIndex) {
-            (slide as HTMLElement).style.display = '';
-            slide.classList.add('active');
+            (slide as HTMLElement).style.display = "";
+            slide.classList.add("active");
           } else {
-            (slide as HTMLElement).style.display = 'none';
-            slide.classList.remove('active');
+            (slide as HTMLElement).style.display = "none";
+            slide.classList.remove("active");
           }
         });
 
         // Update nav links
-        navLinks.forEach(link => {
-          link.classList.remove('active');
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
           if ((link as HTMLElement).dataset.slide === String(slideIndex + 1)) {
-            link.classList.add('active');
+            link.classList.add("active");
           }
         });
 
         // Update page dots
-        pageDots.forEach(dot => {
-          dot.classList.remove('active');
+        pageDots.forEach((dot) => {
+          dot.classList.remove("active");
           if ((dot as HTMLElement).dataset.slide === String(slideIndex + 1)) {
-            dot.classList.add('active');
+            dot.classList.add("active");
           }
         });
 
         // Update URL hash
         window.location.hash = `slide-${slideIndex + 1}`;
-        
+
         currentSlideIndex = slideIndex;
       };
 
@@ -162,10 +198,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       };
 
       // Handle sidebar navigation clicks
-      document.querySelectorAll('.topic-btn').forEach(link => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll(".topic-btn").forEach((link) => {
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          const slideNum = parseInt((link as HTMLElement).dataset.slide || '1', 10) - 1;
+          const slideNum =
+            parseInt((link as HTMLElement).dataset.slide || "1", 10) - 1;
           if (slideNum >= 0 && slideNum < slides.length) {
             showSlide(slideNum);
           }
@@ -173,9 +210,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       });
 
       // Handle page dot clicks
-      pageDots.forEach(dot => {
-        dot.addEventListener('click', () => {
-          const slideNum = parseInt((dot as HTMLElement).dataset.slide || '1', 10) - 1;
+      pageDots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const slideNum =
+            parseInt((dot as HTMLElement).dataset.slide || "1", 10) - 1;
           if (slideNum >= 0 && slideNum < slides.length) {
             showSlide(slideNum);
           }
@@ -183,7 +221,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       });
 
       // Handle hash changes (back/forward browser buttons)
-      window.addEventListener('hashchange', () => {
+      window.addEventListener("hashchange", () => {
         const hash = window.location.hash;
         if (hash) {
           const match = hash.match(/slide-(\d+)/);
@@ -197,14 +235,16 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       });
 
       // Keyboard navigation
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
           e.preventDefault();
-          const prevIndex = currentSlideIndex > 0 ? currentSlideIndex - 1 : slides.length - 1;
+          const prevIndex =
+            currentSlideIndex > 0 ? currentSlideIndex - 1 : slides.length - 1;
           showSlide(prevIndex);
-        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
           e.preventDefault();
-          const nextIndex = currentSlideIndex < slides.length - 1 ? currentSlideIndex + 1 : 0;
+          const nextIndex =
+            currentSlideIndex < slides.length - 1 ? currentSlideIndex + 1 : 0;
           showSlide(nextIndex);
         }
       });
@@ -213,52 +253,55 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       initSlide();
 
       // Sidebar Toggle
-      const toggleBtn = document.getElementById('sidebar-toggle');
-      const sidebar = document.querySelector('.sidebar');
-      const content = document.querySelector('.content');
-      
-      toggleBtn?.addEventListener('click', () => {
-        sidebar?.classList.toggle('hidden');
-        content?.classList.toggle('full-width');
-        
+      const toggleBtn = document.getElementById("sidebar-toggle");
+      const sidebar = document.querySelector(".sidebar");
+      const content = document.querySelector(".content");
+
+      toggleBtn?.addEventListener("click", () => {
+        sidebar?.classList.toggle("hidden");
+        content?.classList.toggle("full-width");
+
         // Optional: Save state to localStorage
-        const isHidden = sidebar?.classList.contains('hidden');
-        localStorage.setItem('sidebar-hidden', String(isHidden));
+        const isHidden = sidebar?.classList.contains("hidden");
+        localStorage.setItem("sidebar-hidden", String(isHidden));
       });
 
       // Restore state
-      if (localStorage.getItem('sidebar-hidden') === 'true') {
-        sidebar?.classList.add('hidden');
-        content?.classList.add('full-width');
+      if (localStorage.getItem("sidebar-hidden") === "true") {
+        sidebar?.classList.add("hidden");
+        content?.classList.add("full-width");
       }
 
       // Theme Toggle
-      const themeToggle = document.getElementById('theme-toggle');
-      
+      const themeToggle = document.getElementById("theme-toggle");
+
       // Initialize theme from localStorage or system preference
       const initTheme = () => {
-        const savedTheme = localStorage.getItem('slides-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-        
-        if (theme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
+        const savedTheme = localStorage.getItem("slides-theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme = savedTheme || (prefersDark ? "dark" : "light");
+
+        if (theme === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
         }
       };
-      
+
       initTheme();
-      
-      themeToggle?.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        if (newTheme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
+
+      themeToggle?.addEventListener("click", () => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+
+        if (newTheme === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
         } else {
-          document.documentElement.removeAttribute('data-theme');
+          document.documentElement.removeAttribute("data-theme");
         }
-        
-        localStorage.setItem('slides-theme', newTheme);
+
+        localStorage.setItem("slides-theme", newTheme);
       });
     </script>
   </body>
@@ -277,22 +320,22 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     --bg-secondary: #1e293b;
     --bg-terminal: #020617;
     --bg-code: #1e293b;
-    
+
     /* Vibrant Accent */
     --accent: #818cf8;
     --accent-dim: rgba(129, 140, 248, 0.15);
     --accent-glow: 0 0 20px rgba(129, 140, 248, 0.3);
-    
+
     /* Text */
     --text-primary: #f8fafc;
     --text-secondary: #cbd5e1;
     --text-dim: #94a3b8;
     --text-muted: #64748b;
     --border: #334155;
-    
+
     --sidebar-width: 300px;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", monospace;
+    --font-sans: "Inter", system-ui, sans-serif;
   }
 
   /* Light Theme */
@@ -301,12 +344,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     --bg-secondary: #ffffff;
     --bg-terminal: #f1f5f9;
     --bg-code: #e2e8f0;
-    
+
     /* Accent - deeper for light mode */
     --accent: #6366f1;
     --accent-dim: rgba(99, 102, 241, 0.1);
     --accent-glow: 0 0 20px rgba(99, 102, 241, 0.2);
-    
+
     /* Text */
     --text-primary: #0f172a;
     --text-secondary: #334155;
@@ -365,7 +408,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .sidebar.hidden {
     transform: translateX(-100%);
   }
-  
+
   .sidebar-toggle {
     position: fixed;
     top: 1rem;
@@ -447,7 +490,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .topic-btn:hover::before {
-    content: '>';
+    content: ">";
     color: var(--accent);
   }
 
@@ -459,12 +502,14 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .topic-btn.active::before {
-    content: '█';
+    content: "█";
     animation: blink 1s step-end infinite;
   }
 
   @keyframes blink {
-    50% { opacity: 0; }
+    50% {
+      opacity: 0;
+    }
   }
 
   .topic-icon {
@@ -580,7 +625,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .theme-toggle-switch::before {
-    content: '🌙';
+    content: "🌙";
     position: absolute;
     left: 4px;
     font-size: 0.7rem;
@@ -589,7 +634,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .theme-toggle-switch::after {
-    content: '☀️';
+    content: "☀️";
     position: absolute;
     right: 4px;
     font-size: 0.7rem;
@@ -630,8 +675,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     color: var(--text-muted);
   }
 
-  .made-with::before { content: '/* '; }
-  .made-with::after { content: ' */'; }
+  .made-with::before {
+    content: "/* ";
+  }
+  .made-with::after {
+    content: " */";
+  }
 
   /* Content Area */
   .content {
@@ -979,7 +1028,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .page-dot::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     background: transparent;
@@ -1050,7 +1099,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     :root {
       --sidebar-width: 250px;
     }
-    
+
     .slide {
       padding: 3rem 2.5rem;
     }
@@ -1186,7 +1235,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
 
   .trad-btn:hover:not(:disabled) {
@@ -1283,7 +1334,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .wait-info {
@@ -1371,7 +1424,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border-left: 3px solid transparent;
     font-size: 0.8rem;
     color: var(--text-muted);
-    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      color 0.3s;
   }
 
   .content-item.ready {
@@ -1492,7 +1548,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   .timeline-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent) 0%, #fbbf24 40%, #f43f5e 100%);
+    background: linear-gradient(
+      90deg,
+      var(--accent) 0%,
+      #fbbf24 40%,
+      #f43f5e 100%
+    );
     border-radius: 4px;
     transition: width 0.5s ease;
   }
@@ -1512,7 +1573,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .marker::before {
-    content: '';
+    content: "";
     display: block;
     width: 2px;
     height: 6px;
@@ -1694,19 +1755,19 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     .triangle-container {
       min-height: 280px;
     }
-    
+
     .triangle-label .label-icon {
       font-size: 1.25rem;
     }
-    
+
     .triangle-label .label-text {
       font-size: 0.8rem;
     }
-    
+
     .triangle-label .label-desc {
       font-size: 0.65rem;
     }
-    
+
     .sacrifice-options {
       grid-template-columns: 1fr;
     }
@@ -1771,7 +1832,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     font-family: var(--font-mono);
     font-size: 0.8rem;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
 
   .islands-btn:hover:not(:disabled) {
@@ -1893,8 +1956,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes island-pulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.2); }
-    50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(14, 165, 233, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+    }
   }
 
   .section-label {
@@ -2059,7 +2127,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   /* Benefits */
   .islands-benefits {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(14, 165, 233, 0.1) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.05) 0%,
+      rgba(14, 165, 233, 0.1) 100%
+    );
     border: 1px solid var(--accent);
     border-radius: 4px;
     padding: 0.5rem;
@@ -2209,7 +2281,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .arrow-line::after {
-    content: '→';
+    content: "→";
     position: absolute;
     right: -10px;
     top: -8px;
@@ -2340,8 +2412,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes pulse-text {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
   }
 
   /* ========================================
@@ -2397,7 +2474,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
 
   .cdn-btn:hover:not(:disabled) {
@@ -2833,8 +2912,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
   }
 
   .solution-title {
@@ -2898,9 +2982,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes explode {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .js-arrow {
@@ -2963,7 +3053,8 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     color: var(--text-secondary);
   }
 
-  .compare-before, .compare-after {
+  .compare-before,
+  .compare-after {
     text-align: center;
   }
 
@@ -3179,7 +3270,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   .arch-arrow::before {
-    content: '→';
+    content: "→";
     font-size: 1.25rem;
     color: var(--accent);
   }
@@ -3208,8 +3299,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.3); }
-    50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(14, 165, 233, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+    }
   }
 
   /* Islands Demo */
@@ -3259,8 +3355,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes island-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.2); }
-    50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(14, 165, 233, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+    }
   }
 
   .section-label {
@@ -3295,7 +3396,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   /* Final Comparison */
   .final-comparison {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(14, 165, 233, 0.1) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.05) 0%,
+      rgba(14, 165, 233, 0.1) 100%
+    );
     border: 1px solid var(--accent);
     border-radius: 4px;
     padding: 1rem;
@@ -3303,8 +3408,14 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .comparison-title {
@@ -3500,8 +3611,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes pulse-text {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
   }
 
   .waiting {
@@ -3606,13 +3722,21 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes move-right {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(40px); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(40px);
+    }
   }
 
   @keyframes move-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-40px); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-40px);
+    }
   }
 
   /* Server Process */
@@ -3890,9 +4014,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border-radius: 50%;
   }
 
-  .browser-dots .dot.red { background: #ff5f56; }
-  .browser-dots .dot.yellow { background: #ffbd2e; }
-  .browser-dots .dot.green { background: #27ca40; }
+  .browser-dots .dot.red {
+    background: #ff5f56;
+  }
+  .browser-dots .dot.yellow {
+    background: #ffbd2e;
+  }
+  .browser-dots .dot.green {
+    background: #27ca40;
+  }
 
   .browser-url {
     flex: 1;
@@ -4018,8 +4148,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes pulse-hint {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   .hydrated-indicator {
@@ -4039,8 +4174,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes glow-indicator {
-    0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.3); }
-    50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(14, 165, 233, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+    }
   }
 
   .hydrated-icon {
@@ -4414,7 +4554,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     gap: 0.75rem;
     margin-top: 0.75rem;
     padding: 0.75rem;
-    background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(14, 165, 233, 0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--accent-dim) 0%,
+      rgba(14, 165, 233, 0.05) 100%
+    );
     border: 1px solid var(--accent);
     border-radius: 6px;
     flex-shrink: 0;
@@ -4454,7 +4598,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   .skeleton-line {
     height: 14px;
-    background: linear-gradient(90deg, rgba(129, 140, 248, 0.2) 25%, rgba(129, 140, 248, 0.4) 50%, rgba(129, 140, 248, 0.2) 75%);
+    background: linear-gradient(
+      90deg,
+      rgba(129, 140, 248, 0.2) 25%,
+      rgba(129, 140, 248, 0.4) 50%,
+      rgba(129, 140, 248, 0.2) 75%
+    );
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.5s ease-in-out infinite;
     border-radius: 4px;
@@ -4471,8 +4620,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes skeleton-shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 
   .skeleton-greeting {
@@ -4492,7 +4645,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .skeleton-stat {
     width: 80px;
     height: 24px;
-    background: linear-gradient(90deg, rgba(129, 140, 248, 0.15) 25%, rgba(129, 140, 248, 0.3) 50%, rgba(129, 140, 248, 0.15) 75%);
+    background: linear-gradient(
+      90deg,
+      rgba(129, 140, 248, 0.15) 25%,
+      rgba(129, 140, 248, 0.3) 50%,
+      rgba(129, 140, 248, 0.15) 75%
+    );
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.5s ease-in-out infinite;
     border-radius: 4px;
@@ -4586,7 +4744,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   .skeleton-image {
     height: 30px;
-    background: linear-gradient(90deg, rgba(129, 140, 248, 0.15) 25%, rgba(129, 140, 248, 0.3) 50%, rgba(129, 140, 248, 0.15) 75%);
+    background: linear-gradient(
+      90deg,
+      rgba(129, 140, 248, 0.15) 25%,
+      rgba(129, 140, 248, 0.3) 50%,
+      rgba(129, 140, 248, 0.15) 75%
+    );
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.5s ease-in-out infinite;
     border-radius: 4px;
@@ -5159,8 +5322,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.5); }
-    50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.8); }
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(14, 165, 233, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.8);
+    }
   }
 
   /* Real Form Inputs */
@@ -5543,9 +5711,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border-radius: 50%;
   }
 
-  .browser-dots .dot.red { background: #ff5f56; }
-  .browser-dots .dot.yellow { background: #ffbd2e; }
-  .browser-dots .dot.green { background: #27ca40; }
+  .browser-dots .dot.red {
+    background: #ff5f56;
+  }
+  .browser-dots .dot.yellow {
+    background: #ffbd2e;
+  }
+  .browser-dots .dot.green {
+    background: #27ca40;
+  }
 
   .browser-url {
     flex: 1;
@@ -5586,8 +5760,13 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes skeleton-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.7; }
+    0%,
+    100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.7;
+    }
   }
 
   .nav-skeleton {
@@ -5840,11 +6019,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     .products-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .seo-tabs {
       flex-wrap: wrap;
     }
-    
+
     .seo-tab {
       flex: 1;
       text-align: center;
@@ -5903,7 +6082,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    transition: transform 0.2s, border-color 0.2s;
+    transition:
+      transform 0.2s,
+      border-color 0.2s;
   }
 
   .cwv-card:hover {
@@ -5911,9 +6092,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border-color: var(--accent);
   }
 
-  .cwv-card.lcp { border-top: 3px solid #10b981; }
-  .cwv-card.inp { border-top: 3px solid #f59e0b; }
-  .cwv-card.cls { border-top: 3px solid #8b5cf6; }
+  .cwv-card.lcp {
+    border-top: 3px solid #10b981;
+  }
+  .cwv-card.inp {
+    border-top: 3px solid #f59e0b;
+  }
+  .cwv-card.cls {
+    border-top: 3px solid #8b5cf6;
+  }
 
   .cwv-icon {
     font-size: 2rem;
@@ -5927,9 +6114,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     color: var(--text-primary);
   }
 
-  .cwv-card.lcp .cwv-acronym { color: #10b981; }
-  .cwv-card.inp .cwv-acronym { color: #f59e0b; }
-  .cwv-card.cls .cwv-acronym { color: #8b5cf6; }
+  .cwv-card.lcp .cwv-acronym {
+    color: #10b981;
+  }
+  .cwv-card.inp .cwv-acronym {
+    color: #f59e0b;
+  }
+  .cwv-card.cls .cwv-acronym {
+    color: #8b5cf6;
+  }
 
   .cwv-label {
     font-size: 0.75rem;
@@ -5956,9 +6149,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     font-weight: 600;
   }
 
-  .bar-segment.good { background: #10b981; }
-  .bar-segment.needs { background: #f59e0b; }
-  .bar-segment.poor { background: #ef4444; }
+  .bar-segment.good {
+    background: #10b981;
+  }
+  .bar-segment.needs {
+    background: #f59e0b;
+  }
+  .bar-segment.poor {
+    background: #ef4444;
+  }
 
   .cwv-factors {
     display: flex;
@@ -5970,12 +6169,16 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     font-size: 0.7rem;
     padding: 0.2rem 0.5rem;
     border-radius: 3px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-secondary);
   }
 
-  .factor.server { border-left: 2px solid #ec4899; }
-  .factor.js { border-left: 2px solid #f59e0b; }
+  .factor.server {
+    border-left: 2px solid #ec4899;
+  }
+  .factor.js {
+    border-left: 2px solid #f59e0b;
+  }
 
   /* Secondary Metrics */
   .cwv-secondary {
@@ -6008,10 +6211,18 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     gap: 0.4rem;
   }
 
-  .cwv-secondary-card.ttfb { border-top: 3px solid #ec4899; }
-  .cwv-secondary-card.fcp { border-top: 3px solid #06b6d4; }
-  .cwv-secondary-card.si { border-top: 3px solid #f97316; }
-  .cwv-secondary-card.tbt { border-top: 3px solid #ef4444; }
+  .cwv-secondary-card.ttfb {
+    border-top: 3px solid #ec4899;
+  }
+  .cwv-secondary-card.fcp {
+    border-top: 3px solid #06b6d4;
+  }
+  .cwv-secondary-card.si {
+    border-top: 3px solid #f97316;
+  }
+  .cwv-secondary-card.tbt {
+    border-top: 3px solid #ef4444;
+  }
 
   .sec-header {
     display: flex;
@@ -6030,10 +6241,18 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     color: var(--text-primary);
   }
 
-  .cwv-secondary-card.ttfb .sec-acronym { color: #ec4899; }
-  .cwv-secondary-card.fcp .sec-acronym { color: #06b6d4; }
-  .cwv-secondary-card.si .sec-acronym { color: #f97316; }
-  .cwv-secondary-card.tbt .sec-acronym { color: #ef4444; }
+  .cwv-secondary-card.ttfb .sec-acronym {
+    color: #ec4899;
+  }
+  .cwv-secondary-card.fcp .sec-acronym {
+    color: #06b6d4;
+  }
+  .cwv-secondary-card.si .sec-acronym {
+    color: #f97316;
+  }
+  .cwv-secondary-card.tbt .sec-acronym {
+    color: #ef4444;
+  }
 
   .sec-fullname {
     font-size: 0.7rem;
@@ -6080,12 +6299,14 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border-radius: 8px;
     overflow: hidden;
     cursor: zoom-in;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
 
   .cwv-image-card:hover {
     transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
 
   .cwv-image-card img {
@@ -6100,7 +6321,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     left: 0;
     right: 0;
     padding: 0.5rem;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
     color: #fff;
     font-size: 0.75rem;
     text-align: center;
@@ -6228,8 +6449,15 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 0.4; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-5px); }
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
   }
 
   .astro-section {
@@ -6244,7 +6472,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     align-items: center;
     gap: 0.5rem;
     padding: 1.5rem 2rem;
-    background: linear-gradient(135deg, rgba(255, 62, 0, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 62, 0, 0.1) 0%,
+      rgba(138, 43, 226, 0.1) 100%
+    );
     border: 2px solid var(--accent);
     border-radius: 12px;
     box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
@@ -6281,7 +6513,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s;
   }
 
   .framework-card:hover {
@@ -6392,5 +6627,266 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
       padding: 1.5rem;
     }
   }
-</style>
 
+  /* Architecture Diagram Styles */
+  .architecture-diagram {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    width: 100%;
+    background: var(--bg-terminal);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.15);
+  }
+
+  .architecture-diagram .top-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .architecture-diagram .block-container {
+    border: 2px solid var(--border);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    background: linear-gradient(
+      135deg,
+      var(--bg-code) 0%,
+      var(--bg-secondary) 100%
+    );
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .architecture-diagram .block-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, #06b6d4 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .architecture-diagram .block-container:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .architecture-diagram .block-container:hover::before {
+    opacity: 1;
+  }
+
+  .architecture-diagram .block-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+
+  .architecture-diagram .block-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .architecture-diagram .sub-block {
+    border: 1px solid var(--border);
+    padding: 0.6rem 1.2rem;
+    min-width: 120px;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: var(--bg-code);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .architecture-diagram .sub-block:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+    transform: scale(1.05);
+  }
+
+  .architecture-diagram .tech-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .architecture-diagram .sub-block.small {
+    min-width: auto;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .architecture-diagram .flow-arrows {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 2rem;
+  }
+
+  .architecture-diagram .flow-arrows .arrow {
+    font-size: 2.5rem;
+    color: var(--accent);
+    animation: arrowPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.6));
+  }
+
+  .architecture-diagram .flow-arrows .arrow:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+
+  .architecture-diagram .flow-arrows .arrow:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes arrowPulse {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(8px);
+    }
+  }
+
+  .architecture-diagram .engine-container {
+    border: 2px solid var(--accent);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    border-radius: 12px;
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.05) 0%,
+      rgba(129, 140, 248, 0.05) 100%
+    );
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.2);
+  }
+
+  .architecture-diagram .engine-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+  }
+
+  .architecture-diagram .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .architecture-diagram .feature-box {
+    border: 1px solid var(--border);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: var(--bg-code);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .architecture-diagram .feature-box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(14, 165, 233, 0.2),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .architecture-diagram .feature-box:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  .architecture-diagram .feature-box:hover::after {
+    left: 100%;
+  }
+
+  .architecture-diagram .feature-box.big-text {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .architecture-diagram .engine-label {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+  }
+
+  @media (max-width: 1024px) {
+    .architecture-diagram .top-row {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .architecture-diagram .feature-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .architecture-diagram {
+      padding: 1.5rem;
+    }
+
+    .architecture-diagram .feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
