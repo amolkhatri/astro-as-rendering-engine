@@ -79,7 +79,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         {sortedSlides.map(async (slide, idx) => {
           const { Content } = await slide.render();
           return (
-            <section class="slide" id={`slide-${idx + 1}`}>
+            <section class="slide" id={`slide-${idx + 1}`} data-slide-index={idx} style={idx === 0 ? '' : 'display: none;'}>
               <div class="slide-number">{String(idx + 1).padStart(2, '0')} / {String(sortedSlides.length).padStart(2, '0')}</div>
               <article class="slide-content">
                 <Content />
@@ -91,91 +91,126 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
         <footer class="content-footer">
           <div class="pagination">
             {sortedSlides.map((_, idx) => (
-              <a href={`#slide-${idx + 1}`} class="page-dot" data-slide={idx + 1}>
+              <button class="page-dot" data-slide={idx + 1} aria-label={`Go to slide ${idx + 1}`}>
                 <span class="sr-only">Slide {idx + 1}</span>
-              </a>
+              </button>
             ))}
           </div>
           <div class="nav-hint">
-            <kbd>scroll</kbd> or <kbd>click</kbd> to navigate
+            <kbd>click</kbd> sidebar to navigate
           </div>
         </footer>
       </main>
     </div>
 
     <script>
-      // Intersection Observer for active slide tracking
+      // Slide management
       const slides = document.querySelectorAll('.slide');
       const navLinks = document.querySelectorAll('.topic-btn');
-      const sectionLinks = document.querySelectorAll('.section-btn');
       const pageDots = document.querySelectorAll('.page-dot');
+      let currentSlideIndex = 0;
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const slideNum = entry.target.id.replace('slide-', '');
-            
-            // Update nav links
-            navLinks.forEach(link => {
-              link.classList.remove('active');
-              if ((link as HTMLElement).dataset.slide === slideNum) {
-                link.classList.add('active');
-              }
-            });
-
-            // Update page dots
-            pageDots.forEach(dot => {
-              dot.classList.remove('active');
-              if ((dot as HTMLElement).dataset.slide === slideNum) {
-                dot.classList.add('active');
-              }
-            });
-          }
-        });
-      }, { threshold: 0.5 });
-
-      slides.forEach(slide => observer.observe(slide));
-
-      // Section Observer for active section tracking
-      const sections = document.querySelectorAll('.slide-section');
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.id;
-            
-            sectionLinks.forEach(link => {
-              link.classList.remove('active');
-              if ((link as HTMLElement).dataset.section === sectionId) {
-                link.classList.add('active');
-              }
-            });
-          }
-        });
-      }, { threshold: 0.3 });
-
-      sections.forEach(section => sectionObserver.observe(section));
-
-      // Smooth scroll for nav clicks (slides)
-      document.querySelectorAll('a[href^="#slide-"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-          e.preventDefault();
-          const href = anchor.getAttribute('href');
-          if (!href) return;
-          
-          // Check if it's a section link (contains a second dash after "slide-")
-          const parts = href.replace('#slide-', '').split('-');
-          if (parts.length > 1) {
-            // Section link: #slide-1-intro -> scroll to #intro
-            const sectionId = parts.slice(1).join('-');
-            const target = document.getElementById(sectionId);
-            target?.scrollIntoView({ behavior: 'smooth' });
+      // Function to show a specific slide
+      const showSlide = (slideIndex: number) => {
+        // Hide all slides
+        slides.forEach((slide, idx) => {
+          if (idx === slideIndex) {
+            (slide as HTMLElement).style.display = '';
+            slide.classList.add('active');
           } else {
-            // Slide link: #slide-1 -> scroll to slide
-            const target = document.querySelector(href);
-            target?.scrollIntoView({ behavior: 'smooth' });
+            (slide as HTMLElement).style.display = 'none';
+            slide.classList.remove('active');
+          }
+        });
+
+        // Update nav links
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if ((link as HTMLElement).dataset.slide === String(slideIndex + 1)) {
+            link.classList.add('active');
+          }
+        });
+
+        // Update page dots
+        pageDots.forEach(dot => {
+          dot.classList.remove('active');
+          if ((dot as HTMLElement).dataset.slide === String(slideIndex + 1)) {
+            dot.classList.add('active');
+          }
+        });
+
+        // Update URL hash
+        window.location.hash = `slide-${slideIndex + 1}`;
+        
+        currentSlideIndex = slideIndex;
+      };
+
+      // Initialize: show first slide or slide from hash
+      const initSlide = () => {
+        const hash = window.location.hash;
+        if (hash) {
+          const match = hash.match(/slide-(\d+)/);
+          if (match) {
+            const slideNum = parseInt(match[1], 10) - 1;
+            if (slideNum >= 0 && slideNum < slides.length) {
+              showSlide(slideNum);
+              return;
+            }
+          }
+        }
+        showSlide(0);
+      };
+
+      // Handle sidebar navigation clicks
+      document.querySelectorAll('.topic-btn').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const slideNum = parseInt((link as HTMLElement).dataset.slide || '1', 10) - 1;
+          if (slideNum >= 0 && slideNum < slides.length) {
+            showSlide(slideNum);
           }
         });
       });
+
+      // Handle page dot clicks
+      pageDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const slideNum = parseInt((dot as HTMLElement).dataset.slide || '1', 10) - 1;
+          if (slideNum >= 0 && slideNum < slides.length) {
+            showSlide(slideNum);
+          }
+        });
+      });
+
+      // Handle hash changes (back/forward browser buttons)
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash;
+        if (hash) {
+          const match = hash.match(/slide-(\d+)/);
+          if (match) {
+            const slideNum = parseInt(match[1], 10) - 1;
+            if (slideNum >= 0 && slideNum < slides.length) {
+              showSlide(slideNum);
+            }
+          }
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prevIndex = currentSlideIndex > 0 ? currentSlideIndex - 1 : slides.length - 1;
+          showSlide(prevIndex);
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const nextIndex = currentSlideIndex < slides.length - 1 ? currentSlideIndex + 1 : 0;
+          showSlide(nextIndex);
+        }
+      });
+
+      // Initialize on load
+      initSlide();
 
       // Sidebar Toggle
       const toggleBtn = document.getElementById('sidebar-toggle');
@@ -282,7 +317,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+    overflow: hidden;
+  }
+
+  body {
+    overflow: hidden;
   }
 
   body {
@@ -292,6 +331,8 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
+    overflow: hidden;
+    height: 100vh;
   }
 
   /* Scanlines removed */
@@ -302,7 +343,8 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   /* Presentation Layout */
   .presentation {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
   }
 
   /* Sidebar */
@@ -595,8 +637,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .content {
     margin-left: var(--sidebar-width);
     flex: 1;
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
     transition: margin-left 0.3s ease;
+    position: relative;
   }
 
   .content.full-width {
@@ -606,9 +650,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .slide {
     min-height: 100vh;
     padding: 4rem 5rem;
-    scroll-snap-align: start;
     position: relative;
-    border-bottom: 1px dashed var(--border);
+    display: none;
+  }
+
+  .slide.active {
+    display: block;
   }
 
   .slide-number {
@@ -924,6 +971,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     cursor: pointer;
     transition: all 0.15s;
     position: relative;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
   }
 
   .page-dot::before {
@@ -3733,8 +3785,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     padding: 1.5rem;
     margin: 0;
     width: 100%;
-    height: calc(100vh - 6rem);
-    min-height: 700px;
+    height: auto;
+    min-height: calc(100vh - 6rem);
+    max-height: none;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -3792,7 +3845,8 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     gap: 1.5rem;
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
+    align-items: start;
   }
 
   @media (max-width: 900px) {
@@ -3809,9 +3863,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: 600px;
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: none;
   }
 
   .browser-chrome {
@@ -3861,9 +3916,10 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     flex-direction: column;
     gap: 0.75rem;
     flex: 1;
-    overflow-y: auto;
+    overflow: visible;
     overflow-x: hidden;
     min-height: 0;
+    height: auto;
   }
 
   /* Page Sections */
@@ -6179,6 +6235,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   .astro-section {
     display: flex;
     justify-content: center;
+    width: 100%;
   }
 
   .astro-core {
@@ -6191,6 +6248,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     border: 2px solid var(--accent);
     border-radius: 12px;
     box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+    width: 100%;
   }
 
   .astro-logo {

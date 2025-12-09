@@ -417,14 +417,14 @@ export const IslandPageAnimation = component$(() => {
       </div>
 
       {/* Key Insight */}
-      <div class="ipa-insight">
+      {/* <div class="ipa-insight">
         <div class="insight-icon">💡</div>
         <div class="insight-text">
           <strong>Key Insight:</strong> Static content renders instantly. 
           <span class="highlight">Server Islands</span> stream personalized content from the server (no client JS!). 
           <span class="highlight">Interactive Islands</span> load JavaScript only when users actually interact.
         </div>
-      </div>
+      </div> */}
     </div>
   );
 });

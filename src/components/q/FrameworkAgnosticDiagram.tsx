@@ -62,15 +62,24 @@ export const FrameworkAgnosticDiagram = component$(() => {
               <code>&lt;Widget client:load /&gt;</code>
             </div>
           </div>
+
+          {/* Astro */}
+          <div class="framework-card astro">
+            <div class="framework-icon">✦</div>
+            <div class="framework-name">Astro</div>
+            <div class="framework-code">
+              <code>&lt;Component client:load /&gt;</code>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Flow arrows */}
+      {/* Flow arrows
       <div class="flow-arrows">
         <div class="arrow">↓</div>
         <div class="arrow">↓</div>
         <div class="arrow">↓</div>
-      </div>
+      </div> */}
 
       {/* Astro at the bottom */}
       <div class="astro-section">

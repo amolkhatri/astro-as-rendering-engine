@@ -110,17 +110,18 @@ export const PlatformAspects = component$(() => {
           font-size: 0.6875rem;
           font-weight: 600;
           letter-spacing: 0.1em;
-          color: var(--accent-secondary, #f59e0b);
-          background: var(--accent-light, rgba(217, 119, 6, 0.1));
+          color: var(--accent, #818cf8);
+          background: var(--accent-dim, rgba(129, 140, 248, 0.15));
           padding: 0.375rem 0.875rem;
           border-radius: 4px;
-          border: 1px solid rgba(217, 119, 6, 0.25);
+          border: 1px solid var(--accent, #818cf8);
+          opacity: 0.8;
         }
 
         .aspects-subtitle {
           display: block;
           font-size: 0.8125rem;
-          color: var(--text-tertiary, #64748b);
+          color: var(--text-dim, #94a3b8);
           margin-top: 0.5rem;
         }
 
@@ -143,7 +144,7 @@ export const PlatformAspects = component$(() => {
 
         .connect-line {
           fill: none;
-          stroke: var(--accent-primary, #d97706);
+          stroke: var(--accent, #818cf8);
           stroke-width: 2;
           stroke-dasharray: 500;
           stroke-dashoffset: 500;
@@ -167,7 +168,7 @@ export const PlatformAspects = component$(() => {
         }
 
         .center-line {
-          stroke: var(--accent-secondary, #f59e0b);
+          stroke: var(--accent, #818cf8);
           stroke-width: 2;
           stroke-dasharray: 200;
           stroke-dashoffset: 200;
@@ -191,7 +192,7 @@ export const PlatformAspects = component$(() => {
         }
 
         .conn-dot {
-          fill: var(--accent-secondary, #f59e0b);
+          fill: var(--accent, #818cf8);
           opacity: 0;
           transform-origin: center;
         }
@@ -214,7 +215,7 @@ export const PlatformAspects = component$(() => {
 
         .pulse-circle {
           fill: none;
-          stroke: var(--accent-primary, #d97706);
+          stroke: var(--accent, #818cf8);
           stroke-width: 2;
           opacity: 0;
         }
@@ -237,8 +238,8 @@ export const PlatformAspects = component$(() => {
         .aspect-card {
           position: absolute;
           width: 180px;
-          background: var(--bg-card, #151d2e);
-          border: 1px solid var(--border-color, rgba(148, 163, 184, 0.12));
+          background: var(--bg-secondary, #1e293b);
+          border: 1px solid var(--border, #334155);
           border-radius: 10px;
           padding: 1.125rem;
           text-align: center;
@@ -259,10 +260,10 @@ export const PlatformAspects = component$(() => {
         }
 
         .aspect-card:hover {
-          border-color: var(--accent-primary, #d97706);
+          border-color: var(--accent, #818cf8);
           transform: scale(1.05) translateY(0) !important;
           z-index: 10;
-          box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15);
+          box-shadow: var(--accent-glow, 0 0 20px rgba(129, 140, 248, 0.3));
         }
 
         .card-1 { top: 30px; left: calc(25% - 90px); }
@@ -290,21 +291,21 @@ export const PlatformAspects = component$(() => {
         .card-title {
           font-size: 0.9375rem;
           font-weight: 600;
-          color: var(--text-primary, #f1f5f9);
+          color: var(--text-primary, #f8fafc);
           margin-bottom: 0.375rem;
           letter-spacing: -0.01em;
         }
 
         .card-desc {
           font-size: 0.875rem;
-          color: var(--text-secondary, #94a3b8);
+          color: var(--text-secondary, #cbd5e1);
           line-height: 1.5;
           font-weight: 400;
         }
 
         .desc-item {
           font-size: 0.875rem;
-          color: var(--text-secondary, #94a3b8);
+          color: var(--text-secondary, #cbd5e1);
           line-height: 1.6;
           margin-top: 0.5rem;
           text-align: left;
@@ -319,7 +320,7 @@ export const PlatformAspects = component$(() => {
         }
 
         .bullet {
-          color: var(--accent-secondary, #f59e0b);
+          color: var(--accent, #818cf8);
           font-weight: 700;
           font-size: 0.9375rem;
           flex-shrink: 0;
@@ -338,13 +339,13 @@ export const PlatformAspects = component$(() => {
           transform: translate(-50%, -50%) scale(0);
           width: 95px;
           height: 95px;
-          background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+          background: linear-gradient(135deg, var(--accent, #818cf8) 0%, #a78bfa 50%, #c084fc 100%);
           border-radius: 50%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 20px rgba(217, 119, 6, 0.4);
+          box-shadow: var(--accent-glow, 0 0 20px rgba(129, 140, 248, 0.3));
           z-index: 15;
         }
 
@@ -464,6 +465,46 @@ export const PlatformAspects = component$(() => {
           .hub-icon {
             font-size: 1.25rem;
           }
+        }
+
+        /* Light Theme Overrides */
+        [data-theme="light"] .aspect-card {
+          background: var(--bg-secondary, #ffffff);
+          border-color: var(--border, #cbd5e1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="light"] .aspect-card:hover {
+          box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+        }
+
+        [data-theme="light"] .card-title {
+          color: var(--text-primary, #0f172a);
+        }
+
+        [data-theme="light"] .card-desc {
+          color: var(--text-secondary, #334155);
+        }
+
+        [data-theme="light"] .desc-item {
+          color: var(--text-secondary, #334155);
+        }
+
+        [data-theme="light"] .aspects-badge {
+          background: var(--accent-dim, rgba(99, 102, 241, 0.1));
+        }
+
+        [data-theme="light"] .aspects-subtitle {
+          color: var(--text-dim, #64748b);
+        }
+
+        [data-theme="light"] .center-hub {
+          background: linear-gradient(135deg, var(--accent, #6366f1) 0%, #818cf8 50%, #a78bfa 100%);
+        }
+
+        [data-theme="light"] .hub-icon,
+        [data-theme="light"] .hub-text {
+          color: #ffffff;
         }
         `}
       </style>
