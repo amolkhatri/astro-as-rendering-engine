@@ -361,6 +361,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   html {
     scroll-behavior: smooth;
     overflow: hidden;
+    width: 100%;
   }
 
   body {
@@ -376,6 +377,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     line-height: 1.6;
     overflow: hidden;
     height: 100vh;
+    width: 100%;
   }
 
   /* Scanlines removed */
@@ -388,6 +390,8 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     display: flex;
     height: 100vh;
     overflow: hidden;
+    width: 100%;
+    position: relative;
   }
 
   /* Sidebar */
@@ -685,15 +689,19 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
   /* Content Area */
   .content {
     margin-left: var(--sidebar-width);
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     height: 100vh;
     overflow-y: auto;
     transition: margin-left 0.3s ease;
     position: relative;
+    width: calc(100vw - var(--sidebar-width));
+    max-width: none;
   }
 
   .content.full-width {
     margin-left: 0;
+    width: 100vw;
   }
 
   .slide {
@@ -701,6 +709,9 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     padding: 4rem 5rem;
     position: relative;
     display: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .slide.active {
@@ -717,6 +728,12 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
   .slide-content {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .slide-content > * {
     max-width: 100%;
   }
 
@@ -1005,6 +1022,11 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
     align-items: center;
     background: linear-gradient(transparent, var(--bg-primary));
     z-index: 50;
+    transition: left 0.3s ease;
+  }
+
+  .content.full-width .content-footer {
+    left: 0;
   }
 
   .pagination {
@@ -1125,6 +1147,7 @@ const sortedSlides = slides.sort((a, b) => a.data.order - b.data.order);
 
     .content {
       margin-left: 0;
+      width: 100%;
     }
 
     .content-footer {
