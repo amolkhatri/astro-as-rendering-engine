@@ -32,7 +32,7 @@ export const CDNCacheAnimation = component$(() => {
         clearInterval(interval);
         isPlaying.value = false;
       }
-    }, 1100);
+    }, 2200);
   });
 
   useVisibleTask$(() => {
@@ -51,8 +51,8 @@ export const CDNCacheAnimation = component$(() => {
           clearInterval(interval);
           isPlaying.value = false;
         }
-      }, 1100);
-    }, 600);
+      }, 4000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   });

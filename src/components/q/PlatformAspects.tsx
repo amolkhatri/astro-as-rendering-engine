@@ -14,8 +14,6 @@ export const PlatformAspects = component$(() => {
   return (
     <div class="platform-aspects">
       <div class="aspects-header">
-        <span class="aspects-badge">WEBSITE PLATFORM</span>
-        <span class="aspects-subtitle">Core pillars of modern web development</span>
       </div>
 
       {/* Central Hub Diagram */}
@@ -55,7 +53,10 @@ export const PlatformAspects = component$(() => {
         <div class="aspect-card card-2">
           <div class="card-icon">🔍</div>
           <div class="card-title">SEO Friendly</div>
-          <div class="card-desc">Server Side Rendering ( SSR )</div>
+          <div class="card-desc">
+            <div class="desc-item"><span class="bullet">•</span> Server Side Rendering ( SSR )</div>
+            <div class="desc-item"><span class="bullet">•</span> Dynamic Rendering</div>
+          </div>
         </div>
 
         <div class="aspect-card card-3">
@@ -70,7 +71,10 @@ export const PlatformAspects = component$(() => {
         <div class="aspect-card card-4">
           <div class="card-icon">🛡️</div>
           <div class="card-title">Future Proof</div>
-          <div class="card-desc">Framework Agnostic</div>
+          <div class="card-desc">
+            <div class="desc-item"><span class="bullet">•</span> Framework Agnostic</div>
+            <div class="desc-item"><span class="bullet">•</span> Modern Web Techniques</div>
+          </div>
         </div>
 
         {/* Center Hub */}

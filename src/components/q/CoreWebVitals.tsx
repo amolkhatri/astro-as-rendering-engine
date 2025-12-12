@@ -23,8 +23,8 @@ export const CoreWebVitals = component$(() => {
             <div class="bar-segment poor" style={{ width: '33%' }}>&gt;4s</div>
           </div>
           <div class="cwv-factors">
-            <span class="factor server">🖥️ Server</span>
-            <span class="factor js">⚡ JS</span>
+            <span class="factor server">🖥️ Reduce Server Response Time</span>
+            <span class="factor js">⚡ Reduce Amount of JS</span>
           </div>
         </div>
 
@@ -39,8 +39,7 @@ export const CoreWebVitals = component$(() => {
             <div class="bar-segment poor" style={{ width: '33%' }}>&gt;500ms</div>
           </div>
           <div class="cwv-factors">
-            <span class="factor js">⚡ JS</span>
-            <span class="factor server">🖥️ Server</span>
+            <span class="factor js">⚡ Reduce Amount of JS</span>
           </div>
         </div>
 
@@ -55,8 +54,7 @@ export const CoreWebVitals = component$(() => {
             <div class="bar-segment poor" style={{ width: '33%' }}>&gt;0.25</div>
           </div>
           <div class="cwv-factors">
-            <span class="factor js">⚡ JS</span>
-            <span class="factor server">🖥️ Server</span>
+            <span class="factor js">⚡ Reduce Amount of JS</span>
           </div>
         </div>
       </div>
@@ -72,7 +70,7 @@ export const CoreWebVitals = component$(() => {
             </div>
             <div class="sec-fullname">Time to First Byte</div>
             <div class="sec-factors">
-              <span class="factor server">🖥️ Server</span>
+              <span class="factor server">🖥️ Reduce Server Response Time</span>
             </div>
           </div>
           <div class="cwv-secondary-card fcp">
@@ -82,8 +80,8 @@ export const CoreWebVitals = component$(() => {
             </div>
             <div class="sec-fullname">First Contentful Paint</div>
             <div class="sec-factors">
-              <span class="factor server">🖥️ Server</span>
-              <span class="factor js">⚡ JS</span>
+              <span class="factor server">🖥️ Reduce Server Response Time</span>
+              <span class="factor js">⚡ Amount of JS</span>
             </div>
           </div>
           <div class="cwv-secondary-card si">
@@ -93,8 +91,8 @@ export const CoreWebVitals = component$(() => {
             </div>
             <div class="sec-fullname">Speed Index</div>
             <div class="sec-factors">
-              <span class="factor server">🖥️ Server</span>
-              <span class="factor js">⚡ JS</span>
+              <span class="factor server">🖥️ Reduce Server Response Time</span>
+              <span class="factor js">⚡ Amount of JS</span>
             </div>
           </div>
           <div class="cwv-secondary-card tbt">
@@ -104,7 +102,7 @@ export const CoreWebVitals = component$(() => {
             </div>
             <div class="sec-fullname">Total Blocking Time</div>
             <div class="sec-factors">
-              <span class="factor js">⚡ JS</span>
+              <span class="factor js">⚡ Reduce Amount of JS</span>
             </div>
           </div>
         </div>

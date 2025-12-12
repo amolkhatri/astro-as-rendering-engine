@@ -60,20 +60,20 @@ export const ImpossibleTriangle = component$(() => {
       <div class="triangle-explanation">
         <div class="explanation-title">Traditional approaches force you to sacrifice one:</div>
         <div class="sacrifice-options">
-          <div class="sacrifice-option">
-            <span class="sacrifice-combo">⚡ + 📄</span>
-            <span class="sacrifice-lose">= Lose 🔍 SEO</span>
-            <span class="sacrifice-why">Client-side JS not indexable</span>
+        <div class="sacrifice-option">
+            <span class="sacrifice-combo">📄 Dynamic Content + 🔍 SEO Friendly</span>
+            <span class="sacrifice-lose">= Lose ⚡ Performance</span>
+            <span class="sacrifice-why">SSR on every request</span>
           </div>
           <div class="sacrifice-option">
-            <span class="sacrifice-combo">⚡ + 🔍</span>
-            <span class="sacrifice-lose">= Lose 📄 Dynamic</span>
+            <span class="sacrifice-combo">⚡Performance + 🔍 SEO Friendly</span>
+            <span class="sacrifice-lose">= Lose 📄 Dynamic Content</span>
             <span class="sacrifice-why">CDN serves static pages</span>
           </div>
           <div class="sacrifice-option">
-            <span class="sacrifice-combo">📄 + 🔍</span>
-            <span class="sacrifice-lose">= Lose ⚡ Speed</span>
-            <span class="sacrifice-why">SSR on every request</span>
+            <span class="sacrifice-combo">⚡Performance + 📄 Dynamic Content</span>
+            <span class="sacrifice-lose">= Lose 🔍 SEO Friendly</span>
+            <span class="sacrifice-why">Client-side JS not indexable</span>
           </div>
         </div>
       </div>
