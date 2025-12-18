@@ -61,7 +61,7 @@ export const PlatformAspects = component$(() => {
 
         <div class="aspect-card card-3">
           <div class="card-icon">🚀</div>
-          <div class="card-title">Performance Metrics</div>
+          <div class="card-title">Performant</div>
           <div class="card-desc">
             <div class="desc-item"><span class="bullet">•</span> No or less javascript on the client side</div>
             <div class="desc-item"><span class="bullet">•</span> Faster Server Response Time ( CDN Cache )</div>
